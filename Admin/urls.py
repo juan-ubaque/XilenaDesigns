@@ -5,5 +5,5 @@ from .views import *
 
 urlpatterns = [
     
-    path('adminCustom', adminHome, name='adminHome'),
+    path('adminCustom/home', adminHome, name='adminHome'),
 ]
