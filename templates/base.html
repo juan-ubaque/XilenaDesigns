@@ -1,30 +1,41 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}  {% endblock  %}</title>
-    <!-- ========== Start ESTATICOS GENERALES ========== -->
-    <link rel="stylesheet" href="{% static 'FontAwesome/css/bootstrap.all.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <script src="{% static 'FontAwesome/js/all.min.js' %}"></script>
-    <!-- ========== End ESTATICOS GENERALES ========== -->
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}  {% endblock  %}</title>
+        <!-- ========== Start ESTATICOS CSS GENERALES ========== -->
+        <link rel="stylesheet" href="{% static 'FontAwesome/css/bootstrap.all.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <script src="{% static 'FontAwesome/js/all.min.js' %}"></script>
+        <!-- ========== End ESTATICOS  CSS GENERALES ========== -->
 
-    
+        <!-- ========== Start ESTATICOS CSS  DE LA PAGINA ========== -->
+            {% block contentCSS %}      {% endblock  %}
+        <!-- ========== End ESTATICOS  CSS DE LA PAGINA ========== -->
+        
+    </head>
+    <body>
+        <!-- ========== Start NAVBAR ========== -->
+            {% block nav %}         {% endblock  %}
+        <!-- ========== End NAVBAR ========== -->
+        
+        <!-- ========== Start SECTION ========== -->
+            {% block SECTION %}     {% endblock  %}
+        <!-- ========== End SECTION ========== -->
 
-    <!-- ========== Start ESTATICOS DE LA PAGINA ========== -->
-    {% block STATIC %}  {% endblock  %}
-</head>
-<body>
+        <!-- ========== Start FOOTER ========== -->
+            {% block footer %}      {% endblock  %}
+        <!-- ========== End FOOTER ========== -->
 
-    <!-- ========== Start NAVBAR ========== -->
-    {% include "navbar.html" %}
-    <!-- ========== End NAVBAR ========== -->
-    <!-- EN ESTE BLOQUE  -->
-    {% block SECTION %} {% endblock  %}
+        <!-- ========== Start ESTATICOS JS GENERALES ========== -->
+        
+        <!-- ========== End ESTATICOS JS GENERALES ========== -->
 
-
-
-</body>
+        <!-- ========== Start ESTATICOS JS DE LA PAGINA ========== -->
+        {% block contentJS %}   {% endblock  %}
+        <!-- ========== End ESTATICOS  JS DE LA PAGINA ========== -->
+    </body>
 </html>
