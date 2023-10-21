@@ -1,33 +1,21 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Product
+from .models import *
 
-#Importamos la vista generica ListView
-from django.views.generic import ListView
+
+from django.views.generic import *
 # Create your views here.
 
 
-def home(request):
-    
-    productos = Product.objects.all()
 
-    return render(request, 'products/homeProducts.html', {'productos': productos})
+#Creamos TemplateView
+class HomeListView(TemplateView):
 
-def homeTest(request):
-    
-    productos = Product.objects.all()
-
-    return render(request, 'test.html', {'productos': productos})
-
-
-
-#Creamos una listView
-class HomeListView(ListView):
-    model = Product
     template_name = 'products/homeProducts.html'
-    context_object_name = 'productos'
-    paginate_by = 5
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["productos"] = Product.objects.all()[:5]
+        context["categorias"] = Categories.objects.all()
 
-
-
-
+        return context
