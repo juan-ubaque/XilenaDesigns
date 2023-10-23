@@ -7,8 +7,8 @@ urlpatterns = [
     
     path('adminCustom/', adminHome, name='adminHome'),
     
-    path('login/', LoginUser, name='login'),
-    path('logout/', logout, name='logout'),
+    path('accounts/login/', LoginUser, name='login'),
+    path('accounts/logout/', userLogout, name='logout'),
     
 
 ]
