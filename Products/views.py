@@ -19,3 +19,6 @@ class HomeListView(TemplateView):
         context["categorias"] = Categories.objects.all()
 
         return context
+
+
+#Vista para creacion de categorias
