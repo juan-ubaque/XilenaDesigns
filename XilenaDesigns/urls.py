@@ -11,7 +11,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')), # Añade esta línea
+    # path('accounts/', include('django.contrib.auth.urls')), # Añade esta línea
     path('', include(products_urls)),
     path('', include(admin_urls)),
 ]

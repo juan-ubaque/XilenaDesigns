@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import *
+
 from django.http import JsonResponse
 
 from django.views.generic import *
@@ -13,22 +14,23 @@ def home(request):
 
     return render(request, 'products/homeProducts.html', {'productos': productos})
 
-def homeTest(request):
-    
-    productos = Product.objects.all()
 
-    return render(request, 'test.html', {'productos': productos})
+from django.views.generic import *
+# Create your views here.
 
 
 
-#Creamos una listView
-class HomeListView(ListView):
-    model = Product
+#Creamos TemplateView
+class HomeListView(TemplateView):
+
     template_name = 'products/homeProducts.html'
-    context_object_name = 'productos'
-    paginate_by = 5
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["productos"] = Product.objects.all()[:5]
+        context["categorias"] = Categories.objects.all()
 
-
+        return context
 
 
 #Endpoints de la API
@@ -43,3 +45,4 @@ def getCategories(request):
         # ... más categorías ...
         ]
     return JsonResponse(categories, safe=False)
+

@@ -1,6 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+
+from django.views.generic import *
+
+#importamos las urls de la app products
+from Products.urls import urlpatterns
 
 # Create your views here.
+@login_required
 def adminHome(request):
 
     user = request.session.get('user', None)#obtenemos el usuario de la sesion
@@ -42,9 +51,3 @@ def userLogout(request):
 
 
 
-
-
-#from django.core import serializers
-
-
-#
