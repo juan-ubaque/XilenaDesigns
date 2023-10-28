@@ -16,7 +16,7 @@
 {% endblock  %}
 
 {% block SECTION %}
-<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark" >
     <!-- Navbar Brand-->
     <a class="navbar-brand ps-3" href="index.html">Bienvenido {{ user }}</a>
     <!-- Sidebar Toggle-->
@@ -43,18 +43,19 @@
 </nav>
 <div id="layoutSidenav">
     <div id="layoutSidenav_nav">
-        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion" style="darkmagenta">
             <div class="sb-sidenav-menu">
                 <div class="nav">
-                    <div class="sb-sidenav-menu-heading">Core</div>
-                    <a class="nav-link" href="index.html">
-                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    <div class="sb-sidenav-menu-heading" style="font-size: 20;">𝑿𝒊𝒍𝒆𝒏𝒂 𝑫𝒆𝒔𝒊𝒈𝒏𝒔</div>
+                    <a href="#" style="text-decoration: none; color: black;text-align: center;">💫"Cuéntɑnos tu sueño y nosotros lo diseñɑmos"</a>
+                    <a class="nav-link" href="index.html" style="color: #040404;">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt" style="color: #040404;"></i></div>
                         Dashboard
                     </a>
-                    <div class="sb-sidenav-menu-heading">Interface</div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                        Layouts
+                    <div class="sb-sidenav-menu-heading" style="color: black;">Interfaz</div>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts" style="color: black;">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-boxes-stacked" style="color: #040404;"></i></div>
+                        Productos
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
@@ -63,15 +64,15 @@
                             <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
                         </nav>
                     </div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                        <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                        Pages
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages" style="color: black;">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-layer-group" style="color: #030303;"></i></div>
+                        Categorias
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
                     <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                Authentication
+                                Aretes
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
@@ -82,7 +83,7 @@
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                Error
+                                Collares
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
@@ -94,15 +95,19 @@
                             </div>
                         </nav>
                     </div>
-                    <div class="sb-sidenav-menu-heading">Addons</div>
-                    <a class="nav-link" href="charts.html">
-                        <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                        Charts
+                    <a class="nav-link" href="tables.html" style="color: black;">
+                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        ventas
                     </a>
-                    <a class="nav-link" href="tables.html">
+                    <div class="sb-sidenav-menu-heading">Observaciones</div>
+                    <a class="nav-link" href="charts.html" style="color: black;">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-users" style="color: #030303;"></i></div>
+                        Referencias
+                    </a>
+                    <!--<a class="nav-link" href="tables.html">
                         <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                         Tables
-                    </a>
+                    </a-->
                 </div>
             </div>
             <div class="sb-sidenav-footer">
