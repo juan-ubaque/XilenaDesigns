@@ -2,6 +2,18 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import *
 
+from django.http import JsonResponse
+
+from django.views.generic import *
+# Create your views here.
+
+
+def home(request):
+    
+    productos = Product.objects.all()
+
+    return render(request, 'products/homeProducts.html', {'productos': productos})
+
 
 from django.views.generic import *
 # Create your views here.
@@ -21,4 +33,16 @@ class HomeListView(TemplateView):
         return context
 
 
-#Vista para creacion de categorias
+#Endpoints de la API
+def getCategories(request):
+
+    if request.method == 'GET':
+        #categories = serializers.serialize('json', Category.objects.all())
+        # categories = list(Category.objects.values())
+        categories = [
+        {'ID': 1, 'NOMBRE': 'ARETES'},
+        {'ID': 2, 'NOMBRE': 'COLLARES'},
+        # ... más categorías ...
+        ]
+    return JsonResponse(categories, safe=False)
+
