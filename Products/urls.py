@@ -5,8 +5,8 @@ from .views import *
 
 urlpatterns = [
     
-    path('', home, name='home'),
-    path('test', homeTest, name='test'),
-    path('list', HomeListView.as_view(), name='list'),
+    path('', HomeListView.as_view(), name='home'),
+    
+    path('adminCustom/getCategories', getCategories, name='getCategories'),
 
 ]

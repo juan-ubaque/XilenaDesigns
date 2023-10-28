@@ -5,5 +5,12 @@ from .views import *
 
 urlpatterns = [
     
-    path('adminCustom/home', adminHome, name='adminHome'),
+    path('adminCustom/', adminHome, name='adminHome'),
+    
+    path('accounts/login/', LoginUser, name='login'),
+    path('accounts/logout/', userLogout, name='logout'),
+    
+
+
+
 ]

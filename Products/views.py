@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Product
+from .models import *
+from django.http import JsonResponse
 
-#Importamos la vista generica ListView
-from django.views.generic import ListView
+from django.views.generic import *
 # Create your views here.
 
 
@@ -31,3 +31,15 @@ class HomeListView(ListView):
 
 
 
+#Endpoints de la API
+def getCategories(request):
+
+    if request.method == 'GET':
+        #categories = serializers.serialize('json', Category.objects.all())
+        # categories = list(Category.objects.values())
+        categories = [
+        {'ID': 1, 'NOMBRE': 'ARETES'},
+        {'ID': 2, 'NOMBRE': 'COLLARES'},
+        # ... más categorías ...
+        ]
+    return JsonResponse(categories, safe=False)
