@@ -33,16 +33,20 @@ class HomeListView(TemplateView):
         return context
 
 
+
+def cart(request):
+        
+        return render(request, 'components/carrito.html')
+
+
 #Endpoints de la API
 def getCategories(request):
-
     if request.method == 'GET':
-        #categories = serializers.serialize('json', Category.objects.all())
-        # categories = list(Category.objects.values())
-        categories = [
-        {'ID': 1, 'NOMBRE': 'ARETES'},
-        {'ID': 2, 'NOMBRE': 'COLLARES'},
-        # ... más categorías ...
-        ]
-    return JsonResponse(categories, safe=False)
+        categories = list(Categories.objects.values())
+
+        data = {
+            'categories': categories
+        }
+
+        return JsonResponse(data)
 

@@ -8,6 +8,8 @@ urlpatterns = [
     path('', HomeListView.as_view(), name='home'),
 
     path('adminCustom/getCategories', getCategories, name='getCategories'),
+    
+    path('cart', cart, name='cart'),
 
 
 ]
