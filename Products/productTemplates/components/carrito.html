@@ -1,75 +1,81 @@
+{% extends "base.html" %}
 {% load static %}
+{% block contentCSS %}
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+    
 
-{% block ContentCSS %}
-<link rel="stylesheet" href="{% static 'css/carrito.css' %}">
+
+    <link rel="stylesheet" href="{% static 'carrito/css/carrito.css' %}">
 {% endblock  %}
 
 
 
 
+{% block SECTION %}     
+        <div class="cart">
+            <div class="product">
+                <img src="{% static  'img/LogoXilenaDesign(1).jpg' %}" alt="Producto 1">
+                <h3>arete1</h3>
+                <p>Precio: $10.000</p>
+                <button class="delete-button">Eliminar</button>
+                <button class="increment-button">+</button>
+                <span class="quantity">1</span>
+                <button class="decrement-button">-</button>
+            </div>
 
-<body>
-    <div class="cart">
-        <div class="product">
-            <img src="{% static  '/img/Aretes I/2022 1.jpeg' %}" alt="Producto 1">
-            <h3>arete1</h3>
-            <p>Precio: $10.000</p>
-            <button class="delete-button">Eliminar</button>
-            <button class="increment-button">+</button>
-            <span class="quantity">1</span>
-            <button class="decrement-button">-</button>
+            <div class="product">
+                <img src="{% static  '/img/Aretes I/2022 4.jpeg' %}" alt="Producto 2">
+                <h3>arete 2</h3>
+                <p>Precio: $15.000</p>
+                <button class="delete-button">Eliminar</button>
+                <button class="increment-button">+</button>
+                <span class="quantity">1</span>
+                <button class="decrement-button">-</button>
+            </div>
+            <!-- Puedes agregar más productos de manera similar -->
+            <div class="product">
+                <img src="{% static  '/img/Aretes I/2022 7.jpeg' %}" alt="Producto 3">
+                <h3>arete 3</h3>
+                <p>Precio: $5.000</p>
+                <button class="delete-button">Eliminar</button>
+                <button class="increment-button">+</button>
+                <span class="quantity">1</span>
+                <button class="decrement-button">-</button>
+            </div>
+            <div class="product">
+                <img src="{% static  '/img/Aretes I/2022 8.jpeg' %}" alt="Producto 4">
+                <h3>arete 4</h3>
+                <p>Precio: $20.000</p>
+                <button class="delete-button">Eliminar</button>
+                <button class="increment-button">+</button>
+                <span class="quantity">1</span>
+                <button class="decrement-button">-</button>
+            </div>
+            <div class="product">
+                <img src="{% static  '/img/Aretes I/2022 6.jpeg' %}" alt="Producto 5">
+                <h3>arete 5</h3>
+                <p>Precio: $10.000</p>
+                <button class="delete-button">Eliminar</button>
+                <button class="increment-button">+</button>
+                <span class="quantity">1</span>
+                <button class="decrement-button">-</button>
+            </div>
+            <div class="product">
+                <img src="{% static  '/img/Aretes I/2022 2.jpeg' %}" alt="Producto 6">
+                <h3>arete 6</h3>
+                <p>Precio: $13.000</p>
+                <button class="delete-button">Eliminar</button>
+                <button class="increment-button">+</button>
+                <span class="quantity">1</span>
+                <button class="decrement-button">-</button>
+            </div>
         </div>
+        <div class="total">
+            <p>Total: </p>
+        </div>
+        <div class="button-container">
+            <!-- Botón de Comprar con estilo -->
+            <button class="comprar-button" src="#"><a href="#">comprar</a></button>
 
-        <div class="product">
-            <img src="{% static  '/img/Aretes I/2022 4.jpeg' %}" alt="Producto 2">
-            <h3>arete 2</h3>
-            <p>Precio: $15.000</p>
-            <button class="delete-button">Eliminar</button>
-            <button class="increment-button">+</button>
-            <span class="quantity">1</span>
-            <button class="decrement-button">-</button>
-        </div>
-        <!-- Puedes agregar más productos de manera similar -->
-        <div class="product">
-            <img src="{% static  '/img/Aretes I/2022 7.jpeg' %}" alt="Producto 3">
-            <h3>arete 3</h3>
-            <p>Precio: $5.000</p>
-            <button class="delete-button">Eliminar</button>
-            <button class="increment-button">+</button>
-            <span class="quantity">1</span>
-            <button class="decrement-button">-</button>
-        </div>
-        <div class="product">
-            <img src="{% static  '/img/Aretes I/2022 8.jpeg' %}" alt="Producto 4">
-            <h3>arete 4</h3>
-            <p>Precio: $20.000</p>
-            <button class="delete-button">Eliminar</button>
-            <button class="increment-button">+</button>
-            <span class="quantity">1</span>
-            <button class="decrement-button">-</button>
-        </div>
-        <div class="product">
-            <img src="{% static  '/img/Aretes I/2022 6.jpeg' %}" alt="Producto 5">
-            <h3>arete 5</h3>
-            <p>Precio: $10.000</p>
-            <button class="delete-button">Eliminar</button>
-            <button class="increment-button">+</button>
-            <span class="quantity">1</span>
-            <button class="decrement-button">-</button>
-        </div>
-        <div class="product">
-            <img src="{% static  '/img/Aretes I/2022 2.jpeg' %}" alt="Producto 6">
-            <h3>arete 6</h3>
-            <p>Precio: $13.000</p>
-            <button class="delete-button">Eliminar</button>
-            <button class="increment-button">+</button>
-            <span class="quantity">1</span>
-            <button class="decrement-button">-</button>
-        </div>
-    </div>
-    <div class="total">
-        <p>Total: </p>
-    </div>
-    <div class="button-container">
-        <!-- Botón de Comprar con estilo -->
-        <button class="comprar-button" src="#"><a href="#">comprar</a></button>
+{% endblock  %}
