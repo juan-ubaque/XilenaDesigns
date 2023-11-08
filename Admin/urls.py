@@ -4,9 +4,14 @@ from .views import *
 
 
 urlpatterns = [
-    
-    path('adminCustom/', adminHome, name='adminHome'),
-    
+    #Principal
+    path('', adminHome, name='adminHome'),
+    path('AccountSettings/', AccountSettingsView.as_view(), name='AccountSettingsView'),
+    #Categorias
+    path('View/Categories/', CategoriesView.as_view(), name='CategoriesView'),
+    path('View/Products/', ProductsView.as_view(), name='ProductsView'),
+
+    #Autenticacion
     path('accounts/login/', LoginUser, name='login'),
     path('accounts/logout/', userLogout, name='logout'),
     

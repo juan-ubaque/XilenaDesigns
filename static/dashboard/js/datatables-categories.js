@@ -54,6 +54,9 @@ const initDataTable = async (tabla,tableOptions,executeFunction) => {
 /**
  * Función para mostrar la tabla de categorias
  */
+
+
+
 const viewListCategories = async () => {
 
     const dataTableOptions = {
@@ -83,11 +86,7 @@ const viewListCategories = async () => {
     
     //inicializamos la tabla Y enviamos la función para listar las categorias y las opciones de la tabla
     await initDataTable("#datatable-categories",dataTableOptions,listCategories);
-    const container_table_categories = document.getElementById("container_table_categories");
-
-    if (container_table_categories.hasAttribute("hidden")) {
-        container_table_categories.removeAttribute("hidden");
-    }
+    
 };
     
 
@@ -255,3 +254,9 @@ const deleteCategories = async (id) => {
       })
     
 }
+
+
+
+window.addEventListener("load", async () => {
+    viewListCategories();
+});

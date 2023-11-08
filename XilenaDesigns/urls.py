@@ -13,7 +13,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # path('accounts/', include('django.contrib.auth.urls')), # Añade esta línea
     path('', include(products_urls)),
-    path('', include(admin_urls)),
+    path('adminCustom/', include(admin_urls)),
 ]
 
 #configuracion extendida para archivos media

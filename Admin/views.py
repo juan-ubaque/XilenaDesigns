@@ -8,7 +8,11 @@ from django.views.generic import *
 #importamos las urls de la app products
 from Products.urls import urlpatterns
 
-# Create your views here.
+#importamos los modelos
+from Products.models import *
+
+
+
 @login_required
 def adminHome(request):
 
@@ -16,6 +20,31 @@ def adminHome(request):
 
 
     return render(request, 'adminHome.html', {'user': user})
+
+
+class CategoriesView(TemplateView):
+    template_name = "dashboard/Pages/categories.html"
+
+class ProductsView(TemplateView):
+    template_name = "dashboard/Pages/Products.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categorias"] = Categories.objects.all()
+
+        return context
+
+
+
+
+class AccountSettingsView(TemplateView):
+    template_name = 'dashboard/Pages/Account.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Configuracion de Cuenta'
+        return context
+
 
 
 def LoginUser(request):

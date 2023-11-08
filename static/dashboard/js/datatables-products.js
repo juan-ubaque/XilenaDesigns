@@ -64,8 +64,8 @@ const viewListProducts = async () => {
     const dataTableOptions = {
         columnDefs: [
             { className: "centered", targets: [0, 1, 2,3,4,5,6] },//centrar contenido de las columnas
-            { orderable: false, targets: [1,3] },//no se puede ordenar por acciones
-            { searchable: false, targets: [0, ] }//no se puede buscar por el id
+            { orderable: false, targets: [5,6] },//no se puede ordenar por acciones
+            { searchable: false, targets: [0,5,6 ] }//no se puede buscar por el id
         ],
         pageLength: 4,
         destroy: true,
@@ -99,12 +99,8 @@ const viewListProducts = async () => {
     }; //opciones de la tabla
     
     //inicializamos la tabla Y enviamos la función para listar las categorias y las opciones de la tabla
-    await initDataTable("#datatable-products",dataTableOptions,listProducts);
-    const container_table_products = document.getElementById("container_table_products");
-
-    if (container_table_products.hasAttribute("hidden")) {
-        container_table_products.removeAttribute("hidden");
-    }
+    await initDataTableProducts("#datatable-products",dataTableOptions,listProducts);
+    
 };
 
 
@@ -174,10 +170,16 @@ const createProducts = async () => {
     const { value: nombreCategoria, isConfirmed } = await Swal.fire({
         title: 'Agregar Categoría',
         html:
-        `<form id="formCategoria">
+        `<form id="formProducto">
         <div class="form-group">
-            <label for="nombreCategoria">Nombre de Categoría</label>
-            <input type="text" class="form-control" id="nombreCategoria">
+            <label for="nombreCategoria">Nombre del Producto</label>
+            <input type="text" class="form-control" id="nombreProducto">
+
+            <label for="nombreCategoria">Categoría</label>
+            <select class="form-control" id="categoriaProducto">
+                {% for category in categories %}
+                    <option value="{{category.id}}">{{category.name_categories}}</option>
+                {% endfor %}
         </div>
     </form>`,
         showCancelButton: true,
@@ -277,3 +279,9 @@ function exportToExcel(idTabla) {
     var table = $(idTabla).DataTable();
                 table.button('.buttons-excel').trigger();
 }
+
+
+
+window.addEventListener("load", async () => {
+    viewListProducts();
+});
