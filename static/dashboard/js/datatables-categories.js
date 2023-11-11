@@ -18,8 +18,8 @@ const listCategories = async () => {
                     <td>${categories.id}</td>
                     <td>${categories.name_categories}</td>
                     <td>
-                        <button class='btn btn-sm btn-primary' onclick="updateCategories('Agregar Categoria',${categories.id},'${categories.name_categories}')"><i class='fa-solid fa-pencil'></i></button>
-                        <button class='btn btn-sm btn-danger' onclick="deleteCategories('${categories.id}')"><i class='fa-solid fa-trash-can' ></i></button>
+                        <button class='btn btn-sm btn-outline-primary' onclick="updateCategories('Agregar Categoria',${categories.id},'${categories.name_categories}')"><i class='fa-solid fa-pencil'></i></button>
+                        <button class='btn btn-sm btn-outline-danger' onclick="deleteCategories('${categories.id}')"><i class='fa-solid fa-trash-can' ></i></button>
                     </td>
                 </tr>`;
         });
@@ -138,11 +138,14 @@ const updateCategories = async (title,id,name) => {
         }else{
             // Aquí puedes hacer algo con el nombre de la categoría ingresado
         
-        Swal.fire(
-            'Categoría Actualizada',
-            'La  categoría ha sido actualizada correctamente.',
-            'success'
-        );
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Categoría Actualizada",
+                text: "La  categoría ha sido actualizada correctamente.",
+                showConfirmButton: false,
+                timer: 1500
+                });
         viewListCategories();
         }
         
@@ -195,11 +198,14 @@ const createCategories = async () => {
             }else{
                 // Aquí puedes hacer algo con el nombre de la categoría ingresado
             
-            Swal.fire(
-                'Categoría Agregada',
-                'La  categoría ha sido agregada correctamente.',
-                'success'
-            );
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Categoría Agregada",
+                    text: "La  categoría ha sido agregada correctamente.",
+                    showConfirmButton: false,
+                    timer: 1500
+                    });
             viewListCategories();
             }
 
@@ -243,11 +249,14 @@ const deleteCategories = async (id) => {
                     text: data.error,
                 });
             }else{
-                Swal.fire(
-                    'Categoría Eliminada',
-                    'La  categoría ha sido eliminada correctamente.',
-                    'success'
-                );
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Categoría Eliminada",
+                    text: "La  categoría ha sido eliminada correctamente.",
+                    showConfirmButton: false,
+                    timer: 1500
+                    });
                 viewListCategories();
             }
         }

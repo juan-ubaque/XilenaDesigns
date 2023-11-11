@@ -118,4 +118,71 @@ def getProducts(request):
         }
 
         return JsonResponse(data)
+
+def createProducts(request):
     
+        if request.method == 'POST':
+            nombre_producto = request.POST.get('nombre_producto')
+            categoria_producto = request.POST.get('categoria_producto')
+            descripcion_producto = request.POST.get('descripcion')
+            precio_producto = request.POST.get('precio')
+            imagen_producto = request.FILES.get('imagen')  # Usa request.FILES para obtener el archivo
+    
+            if nombre_producto and categoria_producto and descripcion_producto and precio_producto and imagen_producto:
+                try:
+                    producto = Product(
+                        Product=nombre_producto,
+                        category_id=categoria_producto,
+                        description=descripcion_producto,
+                        price=precio_producto,
+                        image=imagen_producto
+                    )
+                    producto.save()
+                except Exception as e:
+                    return JsonResponse({'ok': False, 'error': 'El producto ya existe'}, status=400)
+    
+                return JsonResponse({'ok': True})
+            else:
+                return JsonResponse({'ok': False, 'error': 'El proceso de creación falló'}, status=400)
+    
+        return JsonResponse({'ok': False, 'error': 'Método no permitido'}, status=405)
+
+
+def deleteProducts(request, id):
+    
+        if request.method == 'DELETE':
+            try:
+                producto = Product.objects.get(pk=id)
+                producto.delete()
+                return JsonResponse({'ok': True})
+            except Exception as e:
+                return JsonResponse({'ok': False, 'error': 'El proceso de eliminación falló'}, status=400)
+    
+        return JsonResponse({'ok': False, 'error': 'Método no permitido'}, status=405)
+
+
+def updateProducts(request, id):
+        
+            producto = Product.objects.get(pk=id)
+        
+            if request.method == 'POST':
+                nuevo_nombre = request.POST.get('nombre_producto')
+                nueva_categoria = request.POST.get('categoria_producto')
+                nueva_descripcion = request.POST.get('descripcion')
+                nuevo_precio = request.POST.get('precio')
+                nueva_imagen = request.FILES.get('imagen')  # Usa request.FILES para obtener el archivo
+        
+                if nuevo_nombre and nueva_categoria and nueva_descripcion and nuevo_precio and nueva_imagen:
+                    producto.Product = nuevo_nombre
+                    producto.category_id = nueva_categoria
+                    producto.description = nueva_descripcion
+                    producto.price = nuevo_precio
+                    producto.image = nueva_imagen
+        
+                    producto.save()
+        
+                    return JsonResponse({'ok': True})
+                else:
+                    return JsonResponse({'ok': False, 'error': 'El proceso de actualización falló'}, status=400)
+        
+            return JsonResponse({'ok': False, 'error': 'Método no permitido'}, status=405)

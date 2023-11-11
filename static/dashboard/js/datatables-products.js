@@ -21,10 +21,19 @@ const listProducts = async () => {
                     <td>${product.category__name_categories}</td>
                     <td>${product.description}</td>
                     <td>${product.price}</td>
-                    <td><img class="img-fluid w-25" src="/media/${product.image}" alt="No encontrado"></td>
+                    <td>                        
+                        <button class='btn btn-sm btn-outline-success' onclick="viewImageProduct('/media/${product.image}')"><i class="fa-regular fa-eye"></i></button>
+                    </td>
                     <td>
-                        <button class='btn btn-sm btn-primary' onclick="updateCategories('Agregar Categoria',${product.id},'${product.id}')"><i class='fa-solid fa-pencil'></i></button>
-                        <button class='btn btn-sm btn-danger' onclick="deleteCategories('${product.id}')"><i class='fa-solid fa-trash-can' ></i></button>
+                        <button class='btn btn-sm btn-outline-primary' onclick="updateProducts(
+                            ${product.id},
+                            '${product.Product}',
+                            '${product.category__name_categories}',
+                            '${product.description}',
+                            '${product.price}',
+                            '${product.image}'
+                            )"><i class='fa-solid fa-pencil'></i></button>
+                        <button class='btn btn-sm btn-outline-danger' onclick="deleteProducts('${product.id}')"><i class='fa-solid fa-trash-can' ></i></button>
                     </td>
                 </tr>`;
         });
@@ -34,6 +43,19 @@ const listProducts = async () => {
         alert(ex);
     }
 };
+
+/**
+ * Función para mostrar imagen del producto
+ */
+const viewImageProduct = async (url) => {
+    swal.fire({
+        title: 'Imagen del Producto',
+        imageUrl: url,
+        imageWidth: 400,
+        imageHeight: 200,
+        imageAlt: 'Custom image',
+    });
+}
 
 
 
@@ -107,131 +129,212 @@ const viewListProducts = async () => {
 /**
  * Función para editar una categoria
  */
-const updateProducts = async (title,id,name) => {
-    
-    const { value: nombreCategoria, isConfirmed } = await Swal.fire({
-        title: title,
-        html:
-        `<form id="formCategoria">
-        <div class="form-group">
-            <label for="nombreCategoria">Nombre de Categoría</label>
-            <input type="text" class="form-control" id="nombreCategoria" value="${name}">
-        </div>
-    </form>`,
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Actualizar',
-        });
-        
-    if (isConfirmed ) {
-        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-        //guardamos los datos en un objeto formData
-        const nombreCategoria = document.getElementById("nombreCategoria").value;
-        const formData = new FormData();
+const updateProducts = async (id,nombre,categoria,descripcion,precio,imagen) => {
+    const response = await fetch("/adminCustom/getCategories");
 
-        formData.append('nombre_categoria', nombreCategoria);
-        
-        const response = await fetch(`/adminCustom/updateProducts/${id}/`, {
-            method: "POST",
-            body: formData,
-            headers: {
-                'X-CSRFToken': csrftoken,
-            },
-        });
-        
+    if (response.ok) {
         const data = await response.json();
 
-        if (data.error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Ups... Algo salió mal',
-                text: data.error,
+        if (data && data.categories && Array.isArray(data.categories)) {
+            const options = data.categories.map(category => `<option value="${category.id}">${category.name_categories}</option>`);
+
+            // Construir el contenido HTML del formulario
+            const formHtml = `
+                <form id="formProducto">
+                    <div class="form-group">
+                        <label for="nombreCategoria">Nombre del Producto</label>
+                        <input type="text" class="form-control" id="nombreProducto"
+                        value="${nombre}">
+
+                        <label for="nombreCategoria">Categoría</label>
+                        <select class="form-control" id="categoriaProducto">
+                            <option value="">${categoria}</option>
+                            ${options.join('')}
+                        </select>
+
+                        <label for="nombreCategoria">Descripcion</label>
+                        <input type="text" class="form-control" id="descripcion" value="${descripcion}">
+
+                        <label for="nombreCategoria">Precio</label>
+                        <input type="text" class="form-control" id="precio" value="${precio}">
+
+                        <label for="nombreCategoria">Imagen</label>
+                        <input type="file" class="form-control" id="imagen" value="${imagen}">
+                    </div>
+                </form>`;
+
+            const { value: formValues, isConfirmed } = await Swal.fire({
+                title: 'Editar Producto',
+                html: formHtml,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Agregar',
             });
-            return;
-        }else{
-            // Aquí puedes hacer algo con el nombre de la categoría ingresado
-        
-        Swal.fire(
-            'Categoría Actualizada',
-            'La  categoría ha sido actualizada correctamente.',
-            'success'
-        );
-        viewListProducts();
+            
+        if (isConfirmed ) {
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            //guardamos los datos en un objeto formData
+            const nombreProducto = document.getElementById("nombreProducto").value;
+            const categoriaProducto = document.getElementById("categoriaProducto").value;
+            const descripcion = document.getElementById("descripcion").value;
+            const precio = document.getElementById("precio").value;
+            const imagen = document.getElementById("imagen").files[0];
+
+            const formData = new FormData();
+
+            formData.append('nombre_producto', nombreProducto);
+            formData.append('categoria_producto', categoriaProducto);
+            formData.append('descripcion', descripcion);
+            formData.append('precio', precio);
+            formData.append('imagen', imagen, imagen.name);
+            
+            try {
+                const response = await fetch(`/adminCustom/updateProducts/${id}/`, {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': csrftoken,
+                    },
+                });
+                //obtenemos la respuesta del servidor
+                const data = await response.json();
+                if (data.error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: data.error,
+                        text: data.error,
+                    });
+                }else{
+                    // Aquí puedes hacer algo con el nombre de la categoría ingresado
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Producto Actualizado",
+                    text: "EL producto se ha actualizado con exito.",
+                    showConfirmButton: false,
+                    timer: 1500
+                    });
+                viewListProducts();
+                }
+
+                
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ups... Algo salió mal',
+                    text: 'No tienes Conexión con el servidor',
+                });
+            }
+            }
         }
-        
-        }
+    }
+    
     };
 
 /**
  * Función para agregar una categoria
  */
 const createProducts = async () => {
-    const { value: nombreCategoria, isConfirmed } = await Swal.fire({
-        title: 'Agregar Categoría',
-        html:
-        `<form id="formProducto">
-        <div class="form-group">
-            <label for="nombreCategoria">Nombre del Producto</label>
-            <input type="text" class="form-control" id="nombreProducto">
+    const response = await fetch("/adminCustom/getCategories");
 
-            <label for="nombreCategoria">Categoría</label>
-            <select class="form-control" id="categoriaProducto">
-                {% for category in categories %}
-                    <option value="{{category.id}}">{{category.name_categories}}</option>
-                {% endfor %}
-        </div>
-    </form>`,
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Agregar',
-        });
-        
-    if (isConfirmed ) {
-        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-        //guardamos los datos en un objeto formData
-        const nombreCategoria = document.getElementById("nombreCategoria").value;
-        const formData = new FormData();
+    if (response.ok) {
+        const data = await response.json();
 
-        formData.append('nombre_categoria', nombreCategoria);
-        
-        try {
-            const response = await fetch(`/adminCustom/createCategories/`, {
-                method: "POST",
-                body: formData,
-                headers: {
-                    'X-CSRFToken': csrftoken,
-                },
+        if (data && data.categories && Array.isArray(data.categories)) {
+            const options = data.categories.map(category => `<option value="${category.id}">${category.name_categories}</option>`);
+
+            // Construir el contenido HTML del formulario
+            const formHtml = `
+                <form id="formProducto">
+                    <div class="form-group">
+                        <label for="nombreCategoria">Nombre del Producto</label>
+                        <input type="text" class="form-control" id="nombreProducto">
+
+                        <label for="nombreCategoria">Categoría</label>
+                        <select class="form-control" id="categoriaProducto">
+                            <option value="">Seleccione una categoría</option>
+                            ${options.join('')}
+                        </select>
+
+                        <label for="nombreCategoria">Descripcion</label>
+                        <input type="text" class="form-control" id="descripcion">
+
+                        <label for="nombreCategoria">Precio</label>
+                        <input type="text" class="form-control" id="precio">
+
+                        <label for="nombreCategoria">Imagen</label>
+                        <input type="file" class="form-control" id="imagen">
+                    </div>
+                </form>`;
+
+            const { value: formValues, isConfirmed } = await Swal.fire({
+                title: 'Agregar Producto',
+                html: formHtml,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Agregar',
             });
-            //obtenemos la respuesta del servidor
-            const data = await response.json();
-            if (data.error) {
+            
+        if (isConfirmed ) {
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            //guardamos los datos en un objeto formData
+            const nombreProducto = document.getElementById("nombreProducto").value;
+            const categoriaProducto = document.getElementById("categoriaProducto").value;
+            const descripcion = document.getElementById("descripcion").value;
+            const precio = document.getElementById("precio").value;
+            const imagen = document.getElementById("imagen").files[0];
+
+            const formData = new FormData();
+
+            formData.append('nombre_producto', nombreProducto);
+            formData.append('categoria_producto', categoriaProducto);
+            formData.append('descripcion', descripcion);
+            formData.append('precio', precio);
+            formData.append('imagen', imagen, imagen.name);
+            
+            try {
+                const response = await fetch(`/adminCustom/createProducts/`, {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': csrftoken,
+                    },
+                });
+                //obtenemos la respuesta del servidor
+                const data = await response.json();
+                if (data.error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: data.error,
+                        text: data.error,
+                    });
+                }else{
+                    // Aquí puedes hacer algo con el nombre de la categoría ingresado
+                
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Producto Agregada",
+                        text: "El producto ha sido agregado correctamente.",
+                        showConfirmButton: false,
+                        timer: 1500
+                        });
+                viewListProducts();
+                }
+
+                
+            } catch (error) {
                 Swal.fire({
                     icon: 'error',
-                    title: data.error,
-                    text: data.error,
+                    title: 'Ups... Algo salió mal',
+                    text: 'No tienes Conexión con el servidor',
                 });
-            }else{
-                // Aquí puedes hacer algo con el nombre de la categoría ingresado
-            
-            Swal.fire(
-                'Categoría Agregada',
-                'La  categoría ha sido agregada correctamente.',
-                'success'
-            );
-            viewListProducts();
             }
-
-            
-        } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Ups... Algo salió mal',
-                text: 'No tienes Conexión con el servidor',
-            });
+            }
         }
-        }
+    }
     };
 
 /** */
@@ -246,10 +349,10 @@ const deleteProducts = async (id) => {
         cancelButtonColor: '#3085d6',
         cancelButtonText:'Cancelar',
         confirmButtonText: 'Sí, eliminar'
-      }).then(async (result) => {
+    }).then(async (result) => {
         if (result.isConfirmed) {
             const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-            const response = await fetch(`/adminCustom/deleteCategories/${id}/`, {
+            const response = await fetch(`/adminCustom/deleteProducts/${id}/`, {
                 method: "DELETE",
                 headers: {
                     'X-CSRFToken': csrftoken,
@@ -263,15 +366,19 @@ const deleteProducts = async (id) => {
                     text: data.error,
                 });
             }else{
-                Swal.fire(
-                    'Categoría Eliminada',
-                    'La  categoría ha sido eliminada correctamente.',
-                    'success'
-                );
+
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Producto Eliminado",
+                    text: "El producto ha sido eliminado correctamente.",
+                    showConfirmButton: false,
+                    timer: 1500
+                    });
                 viewListProducts();
             }
         }
-      })
+        })
     
 }
 

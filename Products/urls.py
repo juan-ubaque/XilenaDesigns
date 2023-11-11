@@ -17,10 +17,10 @@ urlpatterns = [
     path('adminCustom/deleteCategories/<int:id>/', deleteCategories, name='deleteCategories'),
 
     # Productos CRUD
-    # path('adminCustom/createProducts/', createProducts, name='createProducts'),
+    path('adminCustom/createProducts/', createProducts, name='createProducts'),
     path('adminCustom/getProducts', getProducts, name='getProducts'),
-    # path('adminCustom/updateProducts/<int:id>/', updateProducts, name='updateProducts'),
-    # path('adminCustom/deleteProducts/<int:id>/', deleteProducts, name='deleteProducts'),
+    path('adminCustom/updateProducts/<int:id>/', updateProducts, name='updateProducts'),
+    path('adminCustom/deleteProducts/<int:id>/', deleteProducts, name='deleteProducts'),
 
 
 
