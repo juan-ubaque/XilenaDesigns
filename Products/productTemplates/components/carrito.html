@@ -13,61 +13,96 @@
 
 
 {% block SECTION %}     
-        <div class="cart">
-            <div class="product">
-                <img src="{% static  'img/LogoXilenaDesign(1).jpg' %}" alt="Producto 1">
-                <h3>arete1</h3>
-                <p>Precio: $10.000</p>
-                <button class="delete-button">Eliminar</button>
-                <button class="increment-button">+</button>
-                <span class="quantity">1</span>
-                <button class="decrement-button">-</button>
-            </div>>
+<section class="carrito-de-compras spad">
+    <div class="container">
+        <div class="producto">
+            <img src="Aretes I/2022 1.jpeg" alt="">
+            <div class="info-producto">
+                <h5>aretes bonitos</h5>
+                <p>Precio: $25.000</p>
+                <div class="botones-accion">
+                    
+                    <button class="increment-button">+</button>
+                    <span class="quantity">1</span>
+                    <button class="decrement-button">-</button>
+                    <button class="delete-button">Eliminar</button>
+                </div>
+            </div>
         </div>
-        <div class="total">
-            <p>Total: </p>
+        <div class="producto">
+            <img src="Aretes I/2022 10.jpeg" alt="">
+            <div class="info-producto">
+                <h5>cosianfiros</h5>
+                <p>Precio: $19.000</p>
+                <div class="botones-accion">
+
+                    <button class="increment-button">+</button>
+                    <span class="quantity">1</span>
+                    <button class="decrement-button">-</button>
+                    <button class="delete-button">Eliminar</button>
+                </div>
+            </div>
         </div>
-        <div class="button-container">
-            <!-- Botón de Comprar con estilo -->
-            <button class="comprar-button" src="#"><a href="#">comprar</a></button>
+        <div class="producto">
+            <img src="Aretes I/2022 4.jpeg" alt="">
+            <div class= "info-producto">
+                <h5>aretes</h5>
+                <p>Precio: $20.00</p>
 
+                <div class="botones-accion">
+                    <button class="increment-button">+</button>
+                    <span class="quantity">1</span>
+                    <button class="decrement-button">-</button>
+                    <button class="delete-button">Eliminar</button>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="checkout-carrito">
+            <h5>Total del Carrito</h5>
+            <div class="total">
+                <p>Total: $64.000</p>
+            <a href="#" class="">PROCESAR PAGO</a>
+        </div>
+    </div>
+</section>
 
-            <script>
-                // Función para eliminar un producto
-        document.querySelectorAll('.delete-button').forEach(button => {
-            button.addEventListener('click', () => {
-                button.parentElement.remove();
+<script>
+    // Función para eliminar un producto
+    document.querySelectorAll('.delete-button').forEach(button => {
+        button.addEventListener('click', () => {
+            button.closest('.producto').remove();
+            updateTotal();
+        });
+    });
+
+    // Función para aumentar la cantidad de unidades
+    document.querySelectorAll('.increment-button').forEach(button => {
+        button.addEventListener('click', () => {
+            const quantityElement = button.nextElementSibling;
+            quantityElement.textContent = parseInt(quantityElement.textContent) + 1;
+            updateTotal();
+        });
+    });
+
+    // Función para disminuir la cantidad de unidades
+    document.querySelectorAll('.decrement-button').forEach(button => {
+        button.addEventListener('click', () => {
+            const quantityElement = button.previousElementSibling;
+            const quantity = parseInt(quantityElement.textContent);
+            if (quantity > 1) {
+                quantityElement.textContent = quantity - 1;
                 updateTotal();
-            });
+            }
         });
-        
-        // Función para aumentar la cantidad de unidades
-        document.querySelectorAll('.increment-button').forEach(button => {
-            button.addEventListener('click', () => {
-                const quantityElement = button.nextElementSibling;
-                quantityElement.textContent = parseInt(quantityElement.textContent) + 1;
-                updateTotal();
-            });
-        });
-        
-        // Función para disminuir la cantidad de unidades
-        document.querySelectorAll('.decrement-button').forEach(button => {
-            button.addEventListener('click', () => {
-                const quantityElement = button.previousElementSibling;
-                const quantity = parseInt(quantityElement.textContent);
-                if (quantity > 1) {
-                    quantityElement.textContent = quantity - 1;
-                    updateTotal();
-                }
-            });
-        });
-        
-        // Función para actualizar el total
-        function updateTotal() {
-            const prices = Array.from(document.querySelectorAll('.product p')).map(p => parseFloat(p.textContent.replace('Precio: $', '')));
-            const quantities = Array.from(document.querySelectorAll('.quantity')).map(q => parseInt(q.textContent));
-            const total = prices.reduce((acc, price, index) => acc + price * quantities[index], 0).toFixed(3);
-            document.querySelector('.total p').textContent = `Total: $${total}`;
-        }
-            </script>
+    });
+
+    // Función para actualizar el total
+    function updateTotal() {
+        const prices = Array.from(document.querySelectorAll('.info-producto p')).map(p => parseFloat(p.textContent.replace('Precio: $', '')));
+        const quantities = Array.from(document.querySelectorAll('.quantity')).map(q => parseInt(q.textContent));
+        const total = prices.reduce((acc, price, index) => acc + price * quantities[index], 0).toFixed(3);
+        document.querySelector('.total p').textContent = `Total: $${total}`;
+    }
+</script>
 {% endblock  %}
