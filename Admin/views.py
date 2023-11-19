@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
-
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
@@ -70,6 +72,31 @@ def LoginUser(request):
             return redirect('login')
     return render(request, 'registration/login.html')
 
+def password_reset_request(request):
+    if request.method == "POST":
+        form = PasswordResetForm(request.POST)
+        if form.is_valid():
+            form.save(
+                # Aquí podrías añadir algunos parámetros adicionales si es necesario
+                # por ejemplo, email_template_name='my_custom_email_template.html'
+            )
+            messages.success(request, 'Se ha enviado un correo con instrucciones para restablecer la contraseña.')
+            return render(request, 'password_reset_request.html', {'form': form})
+        else:
+            messages.error(request, 'Ocurrió un error. Por favor, intenta de nuevo.')
+    else:
+        form = PasswordResetForm()
+    return render(request, 'registration/recovery.html', {'form': form})
+def registrar(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')  # Redirigir al login después del registro exitoso
+    else:
+        form = UserCreationForm()
+    
+    return render(request, 'registration/register.html', {'form': form})
 
 
 def userLogout(request):
