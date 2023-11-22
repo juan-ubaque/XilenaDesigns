@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-  {{ title }}
+Administrador de Categorías
 {% endblock title %}
 
 {% block contentCSS %}
@@ -36,11 +36,11 @@
                     <div class="row">
                         <div  class="col-6">
                             <i class="fas fa-table me-1"></i>
-                            Listado de categorias
+                            Listado de categorías
                         </div>
                         <div class="col-6">
-                            Agregar Categoria
-                            <button class='btn btn-sm btn-primary'  onclick="createCategories()"><i class='fa-solid fa-pencil'></i></button>
+                            
+                            <button class='btn btn-sm btn-primary'  onclick="createCategories()"><i class='fa-solid fa-pencil'></i>Agregar Categoría</button>
                         </div>
                     </div>
                 </div>
@@ -50,12 +50,12 @@
                             {% csrf_token %}
                             <table id="datatable-categories" class="table">
                                 <caption>
-                                    Listado de categorias
+                                    Listado de categorías
                                 </caption>
                                 <thead>
                                     <tr>
                                         <th class="centered">#</th>
-                                        <th class="centered">Codigo</th>
+                                        <th class="centered">Código</th>
                                         <th class="centered">Nombre</th>
                                         <th class="centered">Acciones</th>
                                     </tr>
