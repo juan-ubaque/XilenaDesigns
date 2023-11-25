@@ -48,29 +48,38 @@ class AccountSettingsView(TemplateView):
         return context
 
 
+from django.shortcuts import get_object_or_404
 
 def LoginUser(request):
-
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
 
-        user = authenticate (username=username, password=password)
-
-        #Enviamos los datos a mostrar en el template del usuario
-       
+        user = authenticate(username=username, password=password)
 
         if user is not None:
             login(request, user)
+            
             if user.is_superuser:
-                request.session['user'] = user.username
-                return redirect('adminHome')  # Redirigir al adminHome
+                request.session['user'] = user.id
+                return redirect('adminHome')
             else:
+                request.session['user'] = user.id
+                # Verificar si el usuario ya tiene un carrito
+                cart = Cart.objects.filter(user=user).first()
+                
+                if not cart:
+                    # Crear un carrito para el usuario si no tiene uno
+                    cart = Cart(user=user)
+                    cart.save()
+                
                 return redirect('home')
-
-        else:#si no es valido el usuario redirigir a login
+        else:
             return redirect('login')
+    
     return render(request, 'registration/login.html')
+
+
 
 def password_reset_request(request):
     if request.method == "POST":

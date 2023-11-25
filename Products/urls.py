@@ -8,7 +8,10 @@ urlpatterns = [
     path('', HomeListView.as_view(), name='home'),
 
     
-    path('cart', cart, name='cart'),
+    path('cart', CartList, name='cart'),
+    path('addCart/<int:id>/', addCart, name='addCart'),
+    path('deleteCart/<int:id>/', removeCart, name='deleteItemCart'),
+    path('addOneItemCart/<int:id>', addOneItemCart, name='addOneItemCart'),
 
     # Categorias CRUD
     path('adminCustom/createCategories/', createCategories, name='createCategories'),

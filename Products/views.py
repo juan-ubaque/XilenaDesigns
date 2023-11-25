@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 from .models import *
 
@@ -27,21 +28,157 @@ from django.views.generic import *
 
 #Creamos TemplateView
 class HomeListView(TemplateView):
-
+    
     template_name = 'products/homeProducts.html'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["productos"] = Product.objects.all()[:5]
+        all_products = Product.objects.all()
+
+        # Filtros
+        category_filter = self.request.GET.get('category', None)
+        color_filter = self.request.GET.get('color', None)
+        size_filter = self.request.GET.get('size', None)
+
+        if category_filter:
+            all_products = all_products.filter(category=category_filter)
+        if color_filter:
+            all_products = all_products.filter(color=color_filter)
+        if size_filter:
+            all_products = all_products.filter(size=size_filter)
+
+
+        # Paginación
+        paginator = Paginator(all_products, 6)  # 4 productos por página
+        page = self.request.GET.get('page')
+
+        try:
+            products = paginator.page(page)
+        except PageNotAnInteger:
+            products = paginator.page(1)
+        except EmptyPage:
+            products = paginator.page(paginator.num_pages)
+
+        
+        context["productos"] = products
         context["categorias"] = Categories.objects.all()
 
         return context
 
+#Endpoints de la API de Carrito
+
+def CartList(request):
+
+    if request.method == 'GET':
+
+        session_user = request.session.get('user', None)
+
+        if not Cart.objects.filter(user=session_user).exists():
+                return redirect('login')
+        else:   
+                # Si existe una sesión activa, obtenemos el carrito
+                cart = Cart.objects.get(user=request.user)
+                # Obtenemos los items del carrito
+                items = CartItem.objects.filter(cart=cart)
+                # Obtenemos el total de items
+                total_items = items.count()
+                # Obtenemos el total de la compra
+                total = 0
+                
+                
+                for item in items:
+                    total += item.product.price * item.quantity
+                #enviamos los datos a mostrar en el template del usuario    
+                context = {
+                    'cart': cart,
+                    'items': items,
+                    'total_items':total_items,
+                    'total': total
+                    }
+
+                return  render(request, 'components/carrito.html',context)
 
 
-def cart(request):
-        
-        return render(request, 'components/carrito.html')
+def addCart(request, id):
+    if request.method == 'GET':
+        # Obtenemos el usuario de la sesión
+        session_user = request.session.get('user', None)
+        # Si no existe una sesión activa, redirigimos al login
+        if not session_user:
+            return redirect('login')
+        else:
+            # Si existe una sesión activa, obtenemos el carrito
+            cart = Cart.objects.get(user=session_user)
+            # Obtenemos el producto
+            product = Product.objects.get(pk=id)
+            # Obtenemos el item del carrito
+            item = CartItem.objects.filter(cart=cart, product=product).first()
+            # Si el item existe, aumentamos la cantidad
+            if item:
+                item.quantity += 1
+                item.save()
+            # Si no existe, lo creamos
+            else:
+                item = CartItem(
+                    cart=cart,
+                    product=product
+                )
+                item.save()
+            # Redirigimos al carrito
+            return redirect('cart')
+
+
+def addOneItemCart(request, id):
+    if request.method == 'GET':
+        # Obtenemos el usuario de la sesión
+        session_user = request.session.get('user', None)
+        # Si no existe una sesión activa, redirigimos al login
+        if not session_user:
+            return redirect('login')
+        else:
+            # Si existe una sesión activa, obtenemos el carrito
+            cart = Cart.objects.get(user=session_user)
+            # Obtenemos el producto
+            product = Product.objects.get(pk=id)
+            # Obtenemos el item del carrito
+            item = CartItem.objects.filter(cart=cart, product=product).first()
+            # Si el item existe, aumentamos la cantidad
+            if item:
+                item.quantity += 1
+                item.save()
+            # Si no existe, lo creamos
+            else:
+                item = CartItem(
+                    cart=cart,
+                    product=product
+                )
+                item.save()
+            # Redirigimos al carrito
+            return redirect('cart')
+
+def removeCart(request, id):
+    if request.method == 'GET':
+        # Obtenemos el usuario de la sesión
+        session_user = request.session.get('user', None)
+        # Si no existe una sesión activa, redirigimos al login
+        if not session_user:
+            return redirect('login')
+        else:
+            # Si existe una sesión activa, obtenemos el carrito
+            cart = Cart.objects.get(user=session_user)
+            # Obtenemos el producto
+            product = Product.objects.get(pk=id)
+            # Obtenemos el item del carrito
+            item = CartItem.objects.filter(cart=cart, product=product).first()
+            # Si el item existe, aumentamos la cantidad
+            if item:
+                item.quantity -= 1
+                item.save()
+                if item.quantity == 0:
+                    item.delete()
+                    
+            # Redirigimos al carrito
+            return redirect('cart')
 
 
 #Endpoints de la API de categorias
