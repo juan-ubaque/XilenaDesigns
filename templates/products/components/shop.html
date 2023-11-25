@@ -6,11 +6,11 @@
         <div class="col-lg-3 col-md-12">
             <!-- Price Start -->
             <div class="border-bottom mb-4 pb-4">
-                <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
+                <h5 class="font-weight-semi-bold mb-4">Filtrar por Precio</h5>
                 <form>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                         <input type="checkbox" class="custom-control-input" checked id="price-all">
-                        <label class="custom-control-label" for="price-all">All Price</label>
+                        <label class="custom-control-label" for="price-all">Todos</label>
                         <span class="badge border font-weight-normal">1000</span>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
@@ -44,36 +44,36 @@
             
             <!-- Color Start -->
             <div class="border-bottom mb-4 pb-4">
-                <h5 class="font-weight-semi-bold mb-4">Filter by color</h5>
+                <h5 class="font-weight-semi-bold mb-4">Filtrar por color</h5>
                 <form>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                         <input type="checkbox" class="custom-control-input" checked id="color-all">
-                        <label class="custom-control-label" for="price-all">All Color</label>
+                        <label class="custom-control-label" for="price-all">Todos los colores</label>
                         <span class="badge border font-weight-normal">1000</span>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                         <input type="checkbox" class="custom-control-input" id="color-1">
-                        <label class="custom-control-label" for="color-1">Black</label>
+                        <label class="custom-control-label" for="color-1">Negro</label>
                         <span class="badge border font-weight-normal">150</span>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                         <input type="checkbox" class="custom-control-input" id="color-2">
-                        <label class="custom-control-label" for="color-2">White</label>
+                        <label class="custom-control-label" for="color-2">Blanco</label>
                         <span class="badge border font-weight-normal">295</span>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                         <input type="checkbox" class="custom-control-input" id="color-3">
-                        <label class="custom-control-label" for="color-3">Red</label>
+                        <label class="custom-control-label" for="color-3">Rojo</label>
                         <span class="badge border font-weight-normal">246</span>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                         <input type="checkbox" class="custom-control-input" id="color-4">
-                        <label class="custom-control-label" for="color-4">Blue</label>
+                        <label class="custom-control-label" for="color-4">Azul</label>
                         <span class="badge border font-weight-normal">145</span>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
                         <input type="checkbox" class="custom-control-input" id="color-5">
-                        <label class="custom-control-label" for="color-5">Green</label>
+                        <label class="custom-control-label" for="color-5">Verde</label>
                         <span class="badge border font-weight-normal">168</span>
                     </div>
                 </form>
@@ -82,11 +82,11 @@
 
             <!-- Size Start -->
             <div class="mb-5">
-                <h5 class="font-weight-semi-bold mb-4">Filter by size</h5>
+                <h5 class="font-weight-semi-bold mb-4">Filtrar por talla</h5>
                 <form>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                         <input type="checkbox" class="custom-control-input" checked id="size-all">
-                        <label class="custom-control-label" for="size-all">All Size</label>
+                        <label class="custom-control-label" for="size-all">Todas</label>
                         <span class="badge border font-weight-normal">1000</span>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
@@ -166,8 +166,8 @@
                             </div>
                         </div>
                         <div class="card-footer d-flex justify-content-between bg-light border">
-                            <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                            <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                            <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Ver</a>
+                            <a href="{% url 'addCart' product.id  %}" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Añadir al carrito</a>
                         </div>
                     </div>
                 </div>
@@ -175,27 +175,41 @@
                 <!-- ========== End TARJETAS PRODUCTOS ========== -->
                 
                 
+                <!-- Controles de paginación -->
                 <div class="col-12 pb-1">
                     <nav aria-label="Page navigation">
-                    <ul class="pagination justify-content-center mb-3">
-                        <li class="page-item disabled">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                        </li>
-                    </ul>
+                        <ul class="pagination justify-content-center mb-3">
+                            {% if productos.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=1" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                
+                            {% for i in productos.paginator.page_range %}
+                                <li class="page-item {% if productos.number == i %}active{% endif %}">
+                                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                                </li>
+                            {% endfor %}
+                
+                            {% if productos.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ productos.next_page_number }}" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
                     </nav>
                 </div>
+                
+
+
+
+
             </div>
         </div>
         <!-- Shop Product End -->

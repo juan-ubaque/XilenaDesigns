@@ -19,10 +19,14 @@ class Categories(models.Model):
     
 
 class Cart(models.Model):
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    active = models.BooleanField(default=True)
+    def __str__(self):
+        return self.user.username
+
+class CartItem(models.Model):
+    cart = models.ForeignKey('Cart', on_delete=models.CASCADE)
     product = models.ForeignKey('Product', on_delete=models.CASCADE)
-    quantity = models.IntegerField()
-    price = models.FloatField()
+    quantity = models.IntegerField(default=1)
     def __str__(self):
         return self.product.Product
-
-

@@ -11,21 +11,20 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 #Importes necesarios para el funcionamiento de la app
 from pathlib import Path
+import environ
 import os
 
+#Lectura de variables de entorno
+env = environ.Env()
+# reading .env file
+environ.Env.read_env()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-7w91=ezcd894)0hg@2dhs^=z9h&a)eegeqbv&$#nsi8jjfpr=t'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG', default=False)
 
 ALLOWED_HOSTS = []
 
@@ -126,7 +125,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 #Ruta a las carpetas static
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'Products', 'productStatic'),  # Ruta a la carpeta static,
