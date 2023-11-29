@@ -37,7 +37,7 @@
   --xilena-desing-50: #fdf5fe;
   --xilena-desing-100: #fae9fe;
   --xilena-desing-200: #f5d2fc;
-  --xilena-desing-300: #efaff8;
+  --xilena-desing-300: #f0aff8;
   --xilena-desing-400: #e77ff3;
   --xilena-desing-500: #d84ee7;
   --xilena-desing-600: #be2fca;
@@ -53,6 +53,17 @@
   --bs-danger: #dc3545;
   --bs-light: #f8f9fa;
   --bs-dark: #212529;
+  --rgb-xilena-desing-50: 253 245 254;
+  --rgb-xilena-desing-100: 250 233 254;
+  --rgb-xilena-desing-200: 245 210 252;
+  --rgb-xilena-desing-300: 239 175 248;
+  --rgb-xilena-desing-400: 231 127 243;
+  --rgb-xilena-desing-500: 216 78 231;
+  --rgb-xilena-desing-600: 190 47 202;
+  --rgb-xilena-desing-700: 160 35 168;
+  --rgb-xilena-desing-800: 146 34 151;
+  --rgb-xilena-desing-900: 111 31 112;
+  --rgb-xilena-desing-950: 73 8 74;  
   --bs-primary-rgb: 13, 110, 253;
   --bs-secondary-rgb: 108, 117, 125;
   --bs-success-rgb: 25, 135, 84;
@@ -89,6 +100,10 @@
   --bs-code-color: #d63384;
   --bs-highlight-bg: #fff3cd;
 }
+bla{
+  color: rgb(217, 79, 232, 0.2);
+}
+
 
 *,
 *::before,
@@ -2870,6 +2885,8 @@ textarea.form-control-lg {
   border-color: var(--bs-btn-disabled-border-color);
   opacity: var(--bs-btn-disabled-opacity);
 }
+
+
 
 .btn-primary {
   --bs-btn-color: #fff;
