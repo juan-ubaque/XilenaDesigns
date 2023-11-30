@@ -1,30 +1,42 @@
-from django.shortcuts import render, redirect
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.http import HttpResponse
+#Modelos
 from .models import *
+from django.contrib.auth.models import User
+#Http 
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, JsonResponse
+#Render
+from django.template.loader import render_to_string
+from django.views.decorators.csrf import csrf_exempt #importamos excepcion para inhabilitar el csrf
 
-from django.http import JsonResponse
-
+#Views
 from django.views.generic import *
-# Create your views here.
+#Paginacion
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+#Envio de correos
+from django.core.mail import send_mail
 
-#importamos excepcion para inhabilitar el csrf
-from django.views.decorators.csrf import csrf_exempt
-
-#importamos errores 
+#Manejo de excepciones
 from django.shortcuts import get_object_or_404
+
+#Tiwilo
+from twilio.rest import Client
+from .PYtwilo import *
+
+#Envio de correos
+
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
+
+#Settings
+from django.conf import settings
 
 def home(request):
     
     productos = Product.objects.all()
 
     return render(request, 'products/homeProducts.html', {'productos': productos})
-
-
-from django.views.generic import *
-# Create your views here.
-
-
 
 #Creamos TemplateView
 class HomeListView(TemplateView):
@@ -82,17 +94,22 @@ def CartList(request):
                 items = CartItem.objects.filter(cart=cart)
                 # Obtenemos el total de items
                 total_items = items.count()
-                # Obtenemos el total de la compra
+                # Obtenemos el total de la compra}
                 total = 0
                 
                 
+                # Calcula el subtotal para cada item y agrega el resultado al contexto
                 for item in items:
-                    total += item.product.price * item.quantity
-                #enviamos los datos a mostrar en el template del usuario    
+                    item.subtotal = item.product.price * item.quantity
+
+                # Calcula el total general
+                total = sum(item.subtotal for item in items)
+
                 context = {
                     'cart': cart,
                     'items': items,
                     'total_items':total_items,
+                    
                     'total': total
                     }
 
@@ -323,3 +340,161 @@ def updateProducts(request, id):
                     return JsonResponse({'ok': False, 'error': 'El proceso de actualización falló'}, status=400)
         
             return JsonResponse({'ok': False, 'error': 'Método no permitido'}, status=405)
+
+
+
+#Envio de mensajes
+def enviar_mensaje_view(request):
+    # Llama a la función para enviar un mensaje
+    numero_destino = '+573148612874'
+    mensaje = 'Mamamwebo juguemos frix '
+    
+    # Maneja cualquier error que pueda ocurrir durante el envío
+    try:
+        mensaje_id = enviar_mensaje_whatsapp(numero_destino, mensaje)
+        return HttpResponse(f'Mensaje enviado con ID: {mensaje_id}')
+    except Exception as e:
+        return HttpResponse(f'Error al enviar el mensaje: {str(e)}', status=500)
+
+
+def sendEmail(request,id):
+    # Llama a la función para enviar un mensaje
+    usuario = User.objects.get(pk=id)
+    asunto = 'Prueba de envío de correo'
+    mensaje = render_to_string('components/send_mail.html', {'usuario': usuario})
+    remitente = 'designsxilena@gmail.com'
+    destinatarios = [
+        usuario.email,
+        'sanditique071@gmail.com'
+    ]
+    
+    # Maneja cualquier error que pueda ocurrir durante el envío
+    try:
+        # Enviar el correo electrónico compuesto por un archivo HTML
+        send_mail(
+            asunto,
+            '',
+            remitente,
+            destinatarios,
+            html_message=mensaje
+        )
+        return HttpResponse('Email enviado correctamente')
+    except Exception as e:
+        return HttpResponse(f'Error al enviar el mensaje: {str(e)}', status=500)
+
+
+
+
+
+def send_email(request, id):
+    try:
+
+        usuario = User.objects.get(pk=id)
+
+        # Si existe una sesión activa, obtenemos el carrito
+        cart = Cart.objects.get(user=request.user)
+        # Obtenemos los items del carrito
+        items = CartItem.objects.filter(cart=cart)
+        # Obtenemos el total de items
+        total_items = items.count()
+        # Obtenemos el total de la compra}
+        total = 0
+        
+        
+        # Calcula el subtotal para cada item y agrega el resultado al contexto
+        for item in items:
+            item.subtotal = item.product.price * item.quantity
+
+        # Calcula el total general
+        total = sum(item.subtotal for item in items)
+
+
+        
+        mailServer = smtplib.SMTP(settings.EMAIL_HOST, settings.EMAIL_PORT)
+        
+        mailServer.starttls()
+        
+        mailServer.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
+        
+
+        email_to ='jdubaque7@misena.edu.co'
+        #copiamos correo
+        email_cc = [
+            'ubaquejuancho@gmail.com'
+        ]
+
+        
+        # Construimos el mensaje simple
+        mensaje = MIMEMultipart()
+        mensaje['From'] = settings.EMAIL_HOST_USER
+        mensaje['To'] = email_to
+        mensaje['Cc'] = 'ubaquejuancho@gmail.com'
+        mensaje['Subject'] = "Compra Confirmada"
+
+        content = render_to_string('components/mail.html', {
+            'usuario': usuario,
+            'cart': cart,
+            'items': items,
+            'total_items':total_items,
+            'total': total,
+            })
+        mensaje.attach(MIMEText(content, 'html'))
+    
+        # Adjuntar imágenes al mensaje con CID
+        imgLogo = ConvertImageCid('static/img/LogoXilena.jpg', 'LogoXilena')
+        mensaje.attach(imgLogo)
+        # Convertimos las demas imagenes 
+        BannerNavidad = ConvertImageCid('static/img/images_mail/img_header-airplane.png', 'BannerNavidad')
+        mensaje.attach(BannerNavidad)
+
+        ImgFacebook = ConvertImageCid('static/img/images_mail/facebook2x.png', 'ImgFacebook')
+        mensaje.attach(ImgFacebook)
+
+        ImgInstagram = ConvertImageCid('static/img/images_mail/instagram2x.png', 'ImgInstagram')
+        mensaje.attach(ImgInstagram)
+
+
+        mailServer.sendmail(settings.EMAIL_HOST_USER,
+                            email_to,
+                            mensaje.as_string())
+
+        
+        
+
+        return redirect('home')
+    except Exception as e:
+    
+        return redirect('home')
+
+
+
+
+def test (request):
+    usuario = User.objects.get(pk=3)
+
+    # Si existe una sesión activa, obtenemos el carrito
+    cart = Cart.objects.get(user=usuario.id)
+    # Obtenemos los items del carrito
+    items = CartItem.objects.filter(cart=cart)
+    # Obtenemos el total de items
+    total_items = items.count()
+    # Obtenemos el total de la compra}
+    total = 0
+    
+        
+    # Calcula el subtotal para cada item y agrega el resultado al contexto
+    for item in items:
+        item.subtotal = item.product.price * item.quantity
+
+    # Calcula el total general
+    total = sum(item.subtotal for item in items)
+
+
+    context = {
+            'usuario': usuario,
+            'cart': cart,
+            'items': items,
+            'total_items':total_items,
+            'total': total,
+            }
+    return render(request, 'components/mail.html', context)

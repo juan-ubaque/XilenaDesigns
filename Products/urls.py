@@ -26,5 +26,14 @@ urlpatterns = [
     path('adminCustom/deleteProducts/<int:id>/', deleteProducts, name='deleteProducts'),
 
 
+    #Envio de mensajes
+    path('sendMessage', enviar_mensaje_view, name='sendMessage'),
+    #Envio de Correos
+    path('sendEmail/<int:id>/', send_email, name='sendEmail'),
+
+    path('test', test, name='test'),
+
+
+
 
 ]
