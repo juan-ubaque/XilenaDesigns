@@ -96,12 +96,22 @@ def password_reset_request(request):
     else:
         form = PasswordResetForm()
     return render(request, 'registration/recovery.html', {'form': form})
+
+
+
+    
 def registrar(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('login')  # Redirigir al login después del registro exitoso
+        #Recuperar los datos del formulario
+        nombre = request.POST['nombre']
+        apellido = request.POST['apellido']
+        email = request.POST['email']
+        username = request.POST['username']
+        password = request.POST['password']
+
+        #Crear el usuario
+        user = auth.User.objects.create_user(username=username, password=password, email=email, first_name=nombre, last_name=apellido)
+        return redirect('login')  # Redirigir al login después del registro exitoso
     else:
         form = UserCreationForm()
     

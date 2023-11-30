@@ -2,3 +2,4 @@ django==4.0.2
 django-environ==0.10.0
 pillow==9.0.4
 django-widget-tweaks==1.4.12
+twilio==8.10.2
