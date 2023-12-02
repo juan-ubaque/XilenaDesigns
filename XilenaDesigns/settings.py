@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     #Apps Propias
     'Products',
     'Admin',
+    'Users',
 ]
 
 MIDDLEWARE = [

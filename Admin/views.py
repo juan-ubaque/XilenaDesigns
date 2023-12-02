@@ -110,7 +110,7 @@ def registrar(request):
         password = request.POST['password']
 
         #Crear el usuario
-        user = auth.User.objects.create_user(username=username, password=password, email=email, first_name=nombre, last_name=apellido)
+        user = User.objects.create_user(username=username, password=password, email=email, first_name=nombre, last_name=apellido)
         return redirect('login')  # Redirigir al login después del registro exitoso
     else:
         form = UserCreationForm()

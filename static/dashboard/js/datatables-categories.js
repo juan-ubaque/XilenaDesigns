@@ -169,6 +169,7 @@ const createCategories = async () => {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Agregar',
+        
         });
         
     if (isConfirmed ) {

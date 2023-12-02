@@ -7,7 +7,7 @@ urlpatterns = [
     
     path('', HomeListView.as_view(), name='home'),
 
-    
+    #Carrito CRUD
     path('cart', CartList, name='cart'),
     path('addCart/<int:id>/', addCart, name='addCart'),
     path('deleteCart/<int:id>/', removeCart, name='deleteItemCart'),
