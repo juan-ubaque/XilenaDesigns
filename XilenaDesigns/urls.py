@@ -3,6 +3,7 @@ from django.urls import path,include
 #Importamos las url de la app Products
 from Products import urls as products_urls
 from Admin import urls as admin_urls
+from Users import urls as users_urls
 
 #Importamos la configuracion de archivos media
 from django.conf import settings
@@ -10,9 +11,10 @@ from django.conf import settings
 #from Admin import urls as admin_urls
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    
     # path('accounts/', include('django.contrib.auth.urls')), # Añade esta línea
     path('', include(products_urls)),
+    path('user/', include(users_urls)),
     path('adminCustom/', include(admin_urls)),
 ]
 

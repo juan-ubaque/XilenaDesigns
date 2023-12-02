@@ -14,6 +14,6 @@ urlpatterns = [
     #Autenticacion
     path('accounts/login/', LoginUser, name='login'),
     path('accounts/logout/', userLogout, name='logout'),
-    path('accounts/register/', registrar, name='register'),
+    
     path('accounts/recovery/', password_reset_request, name='recovery'),
 ]

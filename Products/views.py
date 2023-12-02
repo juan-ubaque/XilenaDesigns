@@ -346,8 +346,8 @@ def updateProducts(request, id):
 #Envio de mensajes
 def enviar_mensaje_view(request):
     # Llama a la función para enviar un mensaje
-    numero_destino = '+573148612874'
-    mensaje = 'Mamamwebo juguemos frix '
+    numero_destino = '+573232093634'
+    mensaje = 'Hola esto es una prueba de envio de mensajes desde Django'
     
     # Maneja cualquier error que pueda ocurrir durante el envío
     try:
@@ -417,7 +417,7 @@ def send_email(request, id):
         mailServer.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
         
 
-        email_to ='jdubaque7@misena.edu.co'
+        email_to = usuario.email
         #copiamos correo
         email_cc = [
             'ubaquejuancho@gmail.com'
