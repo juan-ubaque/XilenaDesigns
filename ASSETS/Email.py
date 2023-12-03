@@ -9,10 +9,11 @@ from django.conf import settings
 
 class Email:
     def __init__(self, email, password):
+        #Datos de la cuenta de correo
         self.email      = settings.EMAIL_HOST_USER
         self.password   = settings.EMAIL_HOST_PASSWORD
 
-    def send_email(self, to,Cc, subject, message, image=None, name=None):
+    def send_email(self, to,Cc, subject, message, listImage=None, litsName=None):
         
         try:
             
@@ -30,20 +31,24 @@ class Email:
             msg.attach(MIMEText(message, 'html'))
 
             #si hay imagen adjunta la convertimos en cid y la adjuntamos
-            if image != None:
-                msg.attach(Email.ConvertImageCid(image, name))
+            if listImage != None:
 
+                for image, name in zip(listImage, litsName):
 
+                    msg.attach(self.convert_image_cid(image, name))
+                    
             #Envio del mensaje
             server.sendmail(self.email, [to,Cc], msg.as_string())
             server.quit() #Cerramos la conexion
 
             return True
-        except:
+        except Exception as e:
+            print('Error al enviar el correo: '+ str(e))
             return False
 
-
-    def  ConvertImageCid(image, name):
+    @staticmethod
+    def  convert_image_cid(image, name):
+        
         with open(image, 'rb') as img_file:
                 imagen_adjunta = MIMEImage(img_file.read())
                 imagen_adjunta.add_header('Content-ID', f'<{name}>')
