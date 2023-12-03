@@ -497,4 +497,4 @@ def test (request):
             'total_items':total_items,
             'total': total,
             }
-    return render(request, 'components/mail.html', context)
+    return render(request, 'MAILS/confirmCreateUser.html', context)

@@ -6,12 +6,14 @@ from django.contrib.auth.models import User
 
 
 #Enviar Correo
-from .Email import Email
+from ASSETS.Email import Email
 
 
 #Render
 from django.template.loader import render_to_string
 
+#Settings
+from django.conf import settings
 
 #Login
 class UserRegisterView(View):
@@ -27,31 +29,65 @@ class UserRegisterView(View):
         first_name  = request.POST['first_name']
         last_name   = request.POST['last_name']
         
-        try:
+        try:    
+
+            #comprobamos que el usuario no exista
+            if User.objects.filter(username=username).exists():
+                return redirect('register')
+
             user = User.objects.create_user(
                 username    = username,
                 password    = password,
                 email       = email,
                 first_name  = first_name,
                 last_name   = last_name,
-                is_staff   = False,
+                is_staff    = False,
                 )
-                
             user.save()
             
             #Enviamos el correo de confirmacion
-            email = Email()
+            email = Email(
+                email    = settings.EMAIL_HOST_USER,
+                password = settings.EMAIL_HOST_PASSWORD,
+            )
+
+            #Adjuntamos las imagenes
+            listImages = [
+                'static/img/LogoXilena.jpg',
+                'static/img/images_mail/Email.png',
+                'static/img/images_mail/Regalo.png',
+                'static/img/images_mail/facebook2x.png',
+                'static/img/images_mail/instagram2x.png',
+            ]
+            listName = [
+                'LogoXilena',
+                'ImgEmail',
+                'regalo',
+                'ImgFacebook',
+                'ImgInstagram',
+            ]   
+
+            #Renderizamos el html
+            html = render_to_string('MAILS/confirmCreateUser.html', {'name': first_name})
+
+            #Enviamos el correo
             email.send_email(
-                to      = email,
-                Cc      = '',
-                subject = 'Confirmacion de Registro',
-                message = f'<h1>Confirmacion de Registro</h1><br><p>Gracias por registrarte en nuestro sitio web</p>',
-                )
+                to      = user.email,
+                Cc      = 'jdubaque7@misena.edu.co',
+                subject = 'Confirmacion de registro',
+                message = html,
+                listImage = listImages,
+                litsName = listName,
+            )
+            
 
 
             return redirect('login')
-        except:
+        except Exception as e:
             
+            print('Error al crear el usuario'+ str(e))
+            #Si hay un error el usuario no se crea
+
             return redirect('register')
 
 
