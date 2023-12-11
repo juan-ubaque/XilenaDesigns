@@ -45,10 +45,10 @@ def adminHome(request):
 
 
 class CategoriesView(TemplateView):
-    template_name = "Pages/Categories.html"
+    template_name = "pages/Categories.html"
 
 class ProductsView(TemplateView):
-    template_name = "Pages/Products.html"
+    template_name = "pages/Products.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -147,7 +147,7 @@ def userLogout(request):
 
 #--------------------------------- VIEWS ACCOUNT ------------------------------------#
 class AccountProfileView(TemplateView):
-    template_name = 'Pages/Account/AccountProfile.html'
+    template_name = 'pages/Account/AccountProfile.html'
 
     def get_context_data(self, **kwargs):
         
@@ -157,7 +157,7 @@ class AccountProfileView(TemplateView):
 
 
 class AccountSecurityView(TemplateView):
-    template_name = 'Pages/Account/AccountSecurity.html'
+    template_name = 'pages/Account/AccountSecurity.html'
 
     def get_context_data(self, **kwargs):
         
@@ -166,7 +166,7 @@ class AccountSecurityView(TemplateView):
         return context
 
 class AccountNotificationsView(TemplateView):
-    template_name = 'Pages/Account/AccountNotifications.html'
+    template_name = 'pages/Account/AccountNotifications.html'
 
     def get_context_data(self, **kwargs):
         
