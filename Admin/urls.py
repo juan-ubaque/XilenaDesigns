@@ -16,4 +16,9 @@ urlpatterns = [
     path('accounts/logout/', userLogout, name='logout'),
     
     path('accounts/recovery/', password_reset_request, name='recovery'),
+
+    #--------------------------------- ACCOUNT ------------------------------------#
+    path('accounts/View/Profile',AccountProfileView.as_view(), name='accountProfileView'),
+    path('accounts/View/Security',AccountSecurityView.as_view(), name='accountSecurityView'),
+    path('accounts/View/Notifications',AccountNotificationsView.as_view(), name='accountNotificationsView'),
 ]

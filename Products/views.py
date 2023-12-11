@@ -38,7 +38,9 @@ def home(request):
 
     return render(request, 'products/homeProducts.html', {'productos': productos})
 
-#Creamos TemplateView
+
+#--------------------------------- VIEWS PRODUCTS ------------------------------------#
+
 class HomeListView(TemplateView):
     
     template_name = 'products/homeProducts.html'
@@ -76,8 +78,21 @@ class HomeListView(TemplateView):
         context["categorias"] = Categories.objects.all()
 
         return context
+#--------------END-----------------#
 
-#Endpoints de la API de Carrito
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'Pages/DetailProductView.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categorias"] = Categories.objects.all()
+        return context
+#--------------END-----------------#
+
+
+
+#--------------------------------- VIEWS API CART  ------------------------------------#
 
 def CartList(request):
 
@@ -114,6 +129,7 @@ def CartList(request):
                     }
 
                 return  render(request, 'components/carrito.html',context)
+#--------------END-----------------#
 
 
 def addCart(request, id):
@@ -143,6 +159,8 @@ def addCart(request, id):
                 item.save()
             # Redirigimos al carrito
             return redirect('cart')
+    
+#--------------END-----------------#
 
 
 def addOneItemCart(request, id):
@@ -172,6 +190,7 @@ def addOneItemCart(request, id):
                 item.save()
             # Redirigimos al carrito
             return redirect('cart')
+#--------------END-----------------#
 
 def removeCart(request, id):
     if request.method == 'GET':
@@ -196,9 +215,42 @@ def removeCart(request, id):
                     
             # Redirigimos al carrito
             return redirect('cart')
+#--------------END-----------------#
 
+def addInCart(request, id):
+    if request.method == 'GET':
 
-#Endpoints de la API de categorias
+        
+        cantidad = request.GET.get('cantidad', 1) #Recuperamos los datos enviados por el metodo GET
+
+        session_user = request.session.get('user', None) # Obtenemos el usuario de la sesión
+
+        # Si no existe una sesión activa, redirigimos al login
+        if not session_user:
+            return redirect('login')
+        else:
+            
+            cart = Cart.objects.get(user=session_user) # Si existe una sesión activa, obtenemos el carrito
+            
+            product = Product.objects.get(pk=id)
+            
+            item = CartItem.objects.filter(cart=cart, product=product).first()
+            
+            if item:
+                item.quantity = cantidad
+                item.save()
+            # Si no existe, lo creamos
+            else:
+                item = CartItem(
+                    cart=cart,
+                    product=product,
+                    quantity=cantidad
+                )
+                item.save()
+            #retornamos una respuesta en formato json
+            return JsonResponse({'ok': True})
+
+#--------------------------------- VIEWS API CARTEGORIES ------------------------------------#
 def getCategories(request):
     if request.method == 'GET':
         categories = list(Categories.objects.values())
@@ -208,6 +260,7 @@ def getCategories(request):
         }
 
         return JsonResponse(data)
+#--------------END-----------------#
 
 
 def updateCategories(request, id):
@@ -225,6 +278,7 @@ def updateCategories(request, id):
             return JsonResponse({'ok': False, 'error': 'El nombre de la categoría no puede estar vacío'}, status=400)
 
     return JsonResponse({'ok': False, 'error': 'Método no permitido'}, status=405)
+#--------------END-----------------#
 
 
 
@@ -245,6 +299,7 @@ def createCategories(request):
             return JsonResponse({'ok': False, 'error': 'El proceso de actualización falló'}, status=400)
 
     return JsonResponse({'ok': False, 'error': 'Método no permitido'}, status=405)
+#--------------END-----------------#
 
 
 def deleteCategories(request, id):
@@ -258,9 +313,10 @@ def deleteCategories(request, id):
             return JsonResponse({'ok': False, 'error': 'El proceso de eliminación falló'}, status=400)
 
     return JsonResponse({'ok': False, 'error': 'Método no permitido'}, status=405)
+#--------------END-----------------#
 
+#--------------------------------- VIEWS API PRODUCTS ------------------------------------#
 
-#Endpoints de la API de productos
 def getProducts(request):
     if request.method == 'GET':
         
@@ -272,9 +328,9 @@ def getProducts(request):
         }
 
         return JsonResponse(data)
+#--------------END-----------------#
 
 def createProducts(request):
-    
         if request.method == 'POST':
             nombre_producto = request.POST.get('nombre_producto')
             categoria_producto = request.POST.get('categoria_producto')
@@ -300,6 +356,7 @@ def createProducts(request):
                 return JsonResponse({'ok': False, 'error': 'El proceso de creación falló'}, status=400)
     
         return JsonResponse({'ok': False, 'error': 'Método no permitido'}, status=405)
+#--------------END-----------------#
 
 
 def deleteProducts(request, id):
@@ -313,6 +370,7 @@ def deleteProducts(request, id):
                 return JsonResponse({'ok': False, 'error': 'El proceso de eliminación falló'}, status=400)
     
         return JsonResponse({'ok': False, 'error': 'Método no permitido'}, status=405)
+#--------------END-----------------#
 
 
 def updateProducts(request, id):
@@ -340,8 +398,10 @@ def updateProducts(request, id):
                     return JsonResponse({'ok': False, 'error': 'El proceso de actualización falló'}, status=400)
         
             return JsonResponse({'ok': False, 'error': 'Método no permitido'}, status=405)
+#--------------END-----------------#
 
 
+#--------------------------------- VIEWS SEND MESSAGES ------------------------------------#
 
 #Envio de mensajes
 def enviar_mensaje_view(request):
@@ -355,6 +415,7 @@ def enviar_mensaje_view(request):
         return HttpResponse(f'Mensaje enviado con ID: {mensaje_id}')
     except Exception as e:
         return HttpResponse(f'Error al enviar el mensaje: {str(e)}', status=500)
+#--------------END-----------------#
 
 
 def sendEmail(request,id):
@@ -381,6 +442,7 @@ def sendEmail(request,id):
         return HttpResponse('Email enviado correctamente')
     except Exception as e:
         return HttpResponse(f'Error al enviar el mensaje: {str(e)}', status=500)
+#--------------END-----------------#
 
 
 
@@ -465,6 +527,7 @@ def send_email(request, id):
     except Exception as e:
     
         return redirect('home')
+#--------------END-----------------#
 
 
 

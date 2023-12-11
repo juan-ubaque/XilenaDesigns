@@ -15,7 +15,8 @@ from django.template.loader import render_to_string
 #Settings
 from django.conf import settings
 
-#Login
+
+#--------------------------------- VIEWS AUTH ------------------------------------#
 class UserRegisterView(View):
     def get(self,request):
         
@@ -97,7 +98,6 @@ class UserLoginView(View):
         return render(request,'registration/loginTest.html')
     
     def post(self,request):
-        
         username    = request.POST['username']
         password    = request.POST['password']
         
@@ -115,3 +115,37 @@ class UserLoginView(View):
         except:
             
             return redirect('login')
+
+#--------------------------------- VIEWS API USER ------------------------------------#
+def UpdateUser(request):
+    if request.method == 'POST':
+        try:
+            #Recuperamos los datos del formulario
+            idUser      = request.POST['idUser']
+            username    = request.POST['username']
+            email       = request.POST['email']
+            first_name  = request.POST['first_name']
+            last_name   = request.POST['last_name']
+            is_staff    = request.POST['is_staff']
+            is_active   = request.POST['is_active']
+            
+            #Buscamos el usuario
+            user = User.objects.get(id=idUser)
+            
+            #Actualizamos los datos
+            user.username   = username
+            user.email      = email
+            user.first_name = first_name
+            user.last_name  = last_name
+            user.is_staff   = is_staff
+            user.is_active  = is_active
+            
+            #Guardamos los cambios
+            user.save()
+            
+            return redirect('adminHome')
+        except Exception as e:
+            print('Error al actualizar el usuario: '+ str(e))
+            return redirect('adminHome')
+    else:
+        return redirect('adminHome')

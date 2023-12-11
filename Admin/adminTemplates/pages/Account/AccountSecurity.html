@@ -1,0 +1,183 @@
+{% extends "DashboardBase.html" %}
+{% load static %}
+
+{% block CSS %}
+<link rel="stylesheet" href="{% static 'css/DashboardDatatable.css' %}">
+
+{% endblock CSS %}
+
+{% block TITLE %}Panel-Perfil {% endblock %}
+
+{% block MAIN_CONTENT %}
+
+
+
+<div id="layoutSidenav_content">
+    <main>
+        <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+            <div class="container-xl px-4">
+                <div class="page-header-content">
+                    <div class="row align-items-center justify-content-between pt-3">
+                        <div class="col-auto mb-3">
+                            <h1 class="page-header-title">
+                                <div class="page-header-icon"><i data-feather="user"></i></div>
+                                Account Settings - Security
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main page content-->
+        <div class="container-xl px-4 mt-4">
+            <!-- Account page navigation-->
+            <nav class="nav nav-borders">
+                <a class="nav-link " href="{% url 'accountProfileView' %}">Perfil</a>
+                <a class="nav-link active ms-0" href="{% url 'accountSecurityView' %}">Seguridad</a>
+                <a class="nav-link" href="{% url 'accountNotificationsView' %}">Notificaciones</a>
+            </nav>
+            <hr class="mt-0 mb-4" />
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Tarjeta Cambiar contraseña-->
+                    <div class="card mb-4">
+                        <div class="card-header">Cambiar Contraseña</div>
+                        <div class="card-body">
+                            <form>
+                                <!-- Grupo de formulario (contraseña actual)-->
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="currentPassword">Contraseña Actual</label>
+                                    <input class="form-control" id="currentPassword" type="password"
+                                        placeholder="Ingresa la contraseña actual" />
+                                </div>
+                                <!-- Grupo de formulario (nueva contraseña)-->
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="newPassword">Nueva Contraseña</label>
+                                    <input class="form-control" id="newPassword" type="password"
+                                        placeholder="Ingresa la nueva contraseña" />
+                                </div>
+                                <!-- Grupo de formulario (confirmar contraseña)-->
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="confirmPassword">Confirmar Contraseña</label>
+                                    <input class="form-control" id="confirmPassword" type="password"
+                                        placeholder="Confirmar nueva contraseña" />
+                                </div>
+                                <button class="btn btn-primary" type="button">Guardar</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta Preferencias de Seguridad-->
+                    <div class="card mb-4">
+                        <div class="card-header">Preferencias de Seguridad</div>
+                        <div class="card-body">
+                            <!-- Opciones de privacidad de la cuenta-->
+                            <h5 class="mb-1">Privacidad de la Cuenta</h5>
+                            <p class="small text-muted">Al configurar tu cuenta como privada, tu información de perfil y
+                                publicaciones no serán visibles para usuarios fuera de tus grupos de usuarios.</p>
+                            <form>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="radioPrivacy1" type="radio" name="radioPrivacy"
+                                        checked="" />
+                                    <label class="form-check-label" for="radioPrivacy1">Pública (las publicaciones están
+                                        disponibles para todos los usuarios)</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="radioPrivacy2" type="radio"
+                                        name="radioPrivacy" />
+                                    <label class="form-check-label" for="radioPrivacy2">Privada (las publicaciones están
+                                        disponibles solo para usuarios en tus grupos)</label>
+                                </div>
+                            </form>
+                            <hr class="my-4" />
+                            <!-- Opciones de intercambio de datos-->
+                            <h5 class="mb-1">Compartir Datos</h5>
+                            <p class="small text-muted">Compartir datos de uso puede ayudarnos a mejorar nuestros
+                                productos y servir mejor a nuestros usuarios mientras navegan por nuestra aplicación.
+                                Cuando aceptas compartir datos de uso con nosotros, los informes de errores y las
+                                analíticas de uso se enviarán automáticamente a nuestro equipo de desarrollo para su
+                                investigación.</p>
+                            <form>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="radioUsage1" type="radio" name="radioUsage"
+                                        checked="" />
+                                    <label class="form-check-label" for="radioUsage1">Sí, compartir datos e informes de
+                                        errores con los desarrolladores de la aplicación</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="radioUsage2" type="radio" name="radioUsage" />
+                                    <label class="form-check-label" for="radioUsage2">No, limitar el intercambio de
+                                        datos con los desarrolladores de la aplicación</label>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-4">
+                    <!-- Tarjeta de autenticación de dos factores-->
+                    <div class="card mb-4">
+                        <div class="card-header">Autenticación de Dos Factores</div>
+                        <div class="card-body">
+                            <p>Agrega otro nivel de seguridad a tu cuenta activando la autenticación de dos factores. Te
+                                enviaremos
+                                un mensaje de texto para verificar tus intentos de inicio de sesión en dispositivos y
+                                navegadores no
+                                reconocidos.</p>
+                            <form>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="twoFactorOn" type="radio" name="twoFactor"
+                                        checked="" />
+                                    <label class="form-check-label" for="twoFactorOn">Encendido</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="twoFactorOff" type="radio" name="twoFactor" />
+                                    <label class="form-check-label" for="twoFactorOff">Apagado</label>
+                                </div>
+                                <div class="mt-3">
+                                    <label class="small mb-1" for="twoFactorSMS">Número de SMS</label>
+                                    <input class="form-control" id="twoFactorSMS" type="tel"
+                                        placeholder="Ingresa un número de teléfono" value="555-123-4567" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta Eliminar cuenta-->
+                    <div class="card mb-4">
+                        <div class="card-header">Eliminar Cuenta</div>
+                        <div class="card-body">
+                            <p>Eliminar tu cuenta es una acción permanente y no se puede deshacer. Si estás seguro de
+                                que deseas
+                                eliminar tu cuenta, selecciona el botón a continuación.</p>
+                            <button class="btn btn-danger-soft text-danger" type="button">Entiendo, elimina mi
+                                cuenta</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+    <footer class="footer-admin mt-auto footer-light">
+        <div class="container-xl px-4">
+            <div class="row">
+                <div class="col-md-6 small">Copyright © Your Website 2021</div>
+                <div class="col-md-6 text-md-end small">
+                    <a href="#!">Privacy Policy</a>
+                    ·
+                    <a href="#!">Terms &amp; Conditions</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+
+{% endblock %}
+
+{% block JS %}
+<script src="{% static 'js/datatables.min.js' %}"></script>
+<script src="{% static 'js/datatablesSimple.js' %}"></script>
+{% endblock JS %}

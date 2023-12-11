@@ -1,3 +1,4 @@
+{% load static %}
 <!-- Back to Top -->
 <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
@@ -6,7 +7,7 @@
         <div class="row px-xl-5 pt-4">
             <div class="col mb-2 pr-3 pr-xl-5">
                 <a href="{% url 'home' %}" class="text-decoration-none">
-                    <h1 class="mb-4 display-5 font-weight-semi-bold"><img src="static\img\logoXilena.jpg" class="img-thumbnail logo-xilena">Xilena Designs</h1>
+                    <h1 class="mb-4 display-5 font-weight-semi-bold"><img src="{% static 'img/logoXilena.jpg' %}" class="img-thumbnail logo-xilena">Xilena Designs</h1>
                 </a>
                 <p class="mb-3"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Ibagué, Tolima, Colombia</p>
                 <p class="mb-3"><i class="fa fa-envelope text-primary mr-3"></i>Yorlinxmcardenas@gmail.com</p>
