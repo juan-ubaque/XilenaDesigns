@@ -36,6 +36,7 @@ DEBUG = env('DEBUG', default=False)
 ALLOWED_HOSTS = ALLOWED_HOSTS=[   
     'xilenadesigns.pythonanywhere.com',
     '127.0.0.1',
+    'localhost',
     ]
 
 LOGIN_REDIRECT_URL = 'adminHome'

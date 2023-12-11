@@ -1,75 +1,120 @@
-{% extends 'base.html' %}
+{% extends 'AuthBase.html' %}
 {% load static %}
 
 
 {% block title %}
-  Inicia Sesión
+Inicia Sesión
 {% endblock title %}
 
 
-{% block contentCSS %}
-  
-  <script src="{% static 'user/js/user.js' %}"></script>
-  
-{% endblock %}
+{% block STATIC %}
+<link rel="stylesheet" href="{% static 'css/DashboardDatatable.css' %}">
+
+<script src="{% static 'js/datatablesSimple.js' %}"></script>
+{% endblock STATIC %}
 
 
 
- 
+<!-- ========== Start CONTENT MAIN ========== -->
+{% block CONTENT_MAIN %}
 
-
-{% block SECTION %}
 <div id="layoutAuthentication">
     <div id="layoutAuthentication_content">
         <main>
-            <div class="container">
+            <div class="container-xl px-4">
                 <div class="row justify-content-center">
-                    <div class="col-lg-5">
-                        <div class="card shadow-lg border-0 rounded-lg">
-                            <div class="card-header registroheader">
-                                <h3 class="text-dark text-center font-weight-light my-4">Registro</h3>
-                            </div>
-                            <div class="card-body registroform">
+                    <div class="col-lg-7">
+                        <!-- Basic registration form-->
+                        <div class="card shadow-lg border-0 rounded-lg mt-5">
+                            <div class="card-header justify-content-center"><h3 class="fw-light my-4">Crea tu cuenta </h3></div>
+                            <div class="card-body">
+                                <!-- Registration form-->
                                 <form method="post" action="{% url 'register' %}">
                                     {% csrf_token %}
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="first_name" name="first_name" type="text" placeholder="Nombre" />
-                                        <label for="nombre">Nombre</label>
+                                    <!-- Form Row-->
+                                    <div class="row gx-3">
+                                        <div class="col-md-6">
+                                            <!-- Form Group (first name)-->
+                                            <div class="mb-3">
+                                                <label class="small mb-1" for="inputFirstName">Nombre</label>
+                                                <input class="form-control" id="inputFirstName" type="text" placeholder="Ingresa tu nombre" name="first_name"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <!-- Form Group (last name)-->
+                                            <div class="mb-3">
+                                                <label class="small mb-1" for="inputLastName">Apellido</label>
+                                                <input class="form-control" id="inputLastName" type="text" placeholder="Ingresa tu apellido" name="last_name" />
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="apellido" name="last_name" type="text" placeholder="Apellido" />
-                                        <label for="apellido">Apellido</label>
+                                    <!-- Form Group (email address)            -->
+                                    <div class="mb-3">
+                                        <label class="small mb-1" for="inputEmailAddress">Nombre de usuario</label>
+                                        <input class="form-control" id="inputEmailAddress" type="email" aria-describedby="emailHelp" placeholder="Ingresa tu nombre de usuario" name="username" />
                                     </div>
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="email" name="email" type="email" placeholder="Correo Electrónico" />
-                                        <label for="email">Correo Electrónico</label>
+                                    <div class="mb-3">
+                                        <label class="small mb-1" for="inputEmailAddress">Correo Electrónico</label>
+                                        <input class="form-control" id="inputEmailAddress" type="email" aria-describedby="emailHelp" placeholder="Ingresa tu correo" name="email" />
                                     </div>
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="username" name="username" type="text" placeholder="Nombre de Usuario" />
-                                        <label for="username">Nombre de Usuario</label>
+                                    <!-- Form Row    -->
+                                    <div class="row gx-3">
+                                        <div class="col-md-6">
+                                            <!-- Form Group (password)-->
+                                            <div class="mb-3">
+                                                <label class="small mb-1" for="inputPassword">Contraseña</label>
+                                                <input class="form-control" id="inputPassword" type="password" placeholder="Ingresa tu Contraseña"  name="password"/>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="col-md-6">
+                                            <!-- Form Group (confirm password)-->
+                                            <div class="mb-3">
+                                                <label class="small mb-1" for="inputConfirmPassword">Confirma Contraseña</label>
+                                                <input class="form-control" id="inputConfirmPassword" type="password" placeholder="Confirma tu Contraseña" />
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="password" name="password" type="password" placeholder="Contraseña" />
-                                        <label for="password">Contraseña</label>
-                                    </div>
-                                    <div class="d-flex justify-content-center mt-4 mb-0">
-                                        <a class="small" href="{% url 'login' %}">¿Ya tienes una cuenta? Inicia sesión</a>
-                                    </div>
-                                    <div class="d-flex justify-content-center mt-3">
-                                        <button class="btn btn-primary" type="submit">Registrarse</button>
-                                    </div>
+                                    <!-- Form Group (create account submit)-->
+                                    <button class="btn btn-primary btn-block" type="submit">Registrarse</button>
                                 </form>
                             </div>
-                            <div class="card-footer text-center py-3">
-                                <div class="small"><a href="{% url 'recovery' %}">¿Olvidaste tu Contraseña?</a></div>
+                            <div class="card-footer text-center">
+                                <div class="small"><a href="{% url 'login' %}">Ya tienes una cuenta?, Inicia sesión</a></div>
+                                <div class="small"><a href="{% url 'home' %}">Regresar al Inicio</a></div>
+
                             </div>
+                            
                         </div>
                     </div>
                 </div>
             </div>
         </main>
     </div>
+    <div id="layoutAuthentication_footer">
+        <footer class="footer-admin mt-auto footer-dark">
+            <div class="container-xl px-4">
+                <div class="row">
+                    <div class="col-md-6 small">Copyright © Xilena Desing 2023</div>
+                    <div class="col-md-6 text-md-end small">
+                        <a href="#!">Politicas de Privacidad</a>
+                        ·
+                        <a href="#!">Todos los Derechos Reservados</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
-{% endblock %}
+{% endblock CONTENT_MAIN %}
+<!-- ========== End CONTENT MAIN ========== -->
+
+
+
+    <!-- ========== Start JS CONTENT ========== -->
+    {% block JS %} 
+    
+    {% endblock  %}
+    <!-- ========== End JS CONTENT ========== -->

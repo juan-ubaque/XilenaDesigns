@@ -1,181 +1,670 @@
-{% extends "base.html" %}
+{% extends "DashboardBase.html" %}
 {% load static %}
 
-{% block title %}
-Panel de Administrador Xilena Desing
-{% endblock title %}
+{% block CSS %}
+<link rel="stylesheet" href="{% static 'css/DashboardDatatable.css' %}">
 
-{% block contentCSS %}
+{% endblock CSS %}
 
+{% block TITLE %}Panel-Administración {% endblock %}
 
-<!-- ========== Start datatable css ========== -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
-<link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+{% block MAIN_CONTENT %}
+<div id="layoutSidenav_content">
+    <main>
+        <!-- ========== Start HEADER ========== -->
+        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+            <div class="container-xl px-4">
+                <div class="page-header-content pt-4">
+                    <div class="row align-items-center justify-content-between">
+                        <div class="col-auto mt-4">
+                            <h1 class="page-header-title">
+                                <div class="page-header-icon"><i data-feather="activity"></i></div>
+                                Panel de Administración
+                            </h1>
+                            <div class="page-header-subtitle">Panel para
+                                <strong>Administrar</strong> los productos y usuarios de la tienda
+                            </div>
+                        </div>
+                        <div class="col-12 col-xl-auto mt-4">
+                            <div class="input-group input-group-joined border-0" style="width: 16.5rem">
+                                <span class="input-group-text"><i class="text-primary"
+                                        data-feather="calendar"></i></span>
+                                <input class="form-control ps-0 pointer" id="litepickerRangePlugin"
+                                    placeholder="Select date range..." />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- ========== End HEADER ========== -->
 
+        <!-- ========== Start CONTENT ========== -->
+        <div class="container-xl px-4 mt-n10">
+            <div class="row">
+                <div class="col-xxl-4 col-xl-12 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body h-100 p-5">
+                            <div class="row align-items-center">
+                                <div class="col-xl-8 col-xxl-12">
+                                    <div class="text-center text-xl-start text-xxl-center mb-4 mb-xl-0 mb-xxl-4">
+                                        <h1 class="text-primary">Bienvenido {{ user.username }}</h1>
+                                        <p class="text-gray-700 mb-0">Browse our fully designed UI toolkit! Browse our
+                                            prebuilt app pages, components, and utilites, and be sure to look at our
+                                            full documentation!</p>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-xxl-12 text-center"><img class="img-fluid"
+                                        src="{% static 'image/home.svg' %}" style="max-width: 26rem" /></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-4 col-xl-6 mb-4">
+                    <div class="card card-header-actions h-100">
+                        <div class="card-header">
+                            Actividad Reciente
+                            <div class="dropdown no-caret">
+                                <button class="btn btn-transparent-dark btn-icon dropdown-toggle"
+                                    id="dropdownMenuButton" type="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false"><i class="text-gray-500"
+                                        data-feather="more-vertical"></i></button>
+                                <div class="dropdown-menu dropdown-menu-end animated--fade-in-up"
+                                    aria-labelledby="dropdownMenuButton">
+                                    <h6 class="dropdown-header">Filtro de Actividad:</h6>
+                                    <a class="dropdown-item" href="#!"><span
+                                            class="badge bg-green-soft text-green my-1">Comercio</span></a>
+                                    <a class="dropdown-item" href="#!"><span
+                                            class="badge bg-blue-soft text-blue my-1">Reportes</span></a>
+                                    <a class="dropdown-item" href="#!"><span
+                                            class="badge bg-yellow-soft text-yellow my-1">Servidor</span></a>
+                                    <a class="dropdown-item" href="#!"><span
+                                            class="badge bg-purple-soft text-purple my-1">Usuarios</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="timeline timeline-xs">
+                                <!-- Elemento de la línea de tiempo 1 -->
+                                <div class="timeline-item">
+                                    <div class="timeline-item-marker">
+                                        <div class="timeline-item-marker-text">27 min</div>
+                                        <div class="timeline-item-marker-indicator bg-green"></div>
+                                    </div>
+                                    <div class="timeline-item-content">
+                                        ¡Nuevo pedido realizado!
+                                        <a class="fw-bold text-dark" href="#!">Pedido #2912</a>
+                                        ha sido realizado exitosamente.
+                                    </div>
+                                </div>
+                                <!-- Elemento de la línea de tiempo 2 -->
+                                <div class="timeline-item">
+                                    <div class="timeline-item-marker">
+                                        <div class="timeline-item-marker-text">58 min</div>
+                                        <div class="timeline-item-marker-indicator bg-blue"></div>
+                                    </div>
+                                    <div class="timeline-item-content">
+                                        Su
+                                        <a class="fw-bold text-dark" href="#!">informe semanal</a>
+                                        ha sido generado y está listo para ser visualizado.
+                                    </div>
+                                </div>
+                                <!-- Elemento de la línea de tiempo 3 -->
+                                <div class="timeline-item">
+                                    <div class="timeline-item-marker">
+                                        <div class="timeline-item-marker-text">2 hrs</div>
+                                        <div class="timeline-item-marker-indicator bg-purple"></div>
+                                    </div>
+                                    <div class="timeline-item-content">
+                                        Nuevo usuario
+                                        <a class="fw-bold text-dark" href="#!">Valerie Luna</a>
+                                        se ha registrado.
+                                    </div>
+                                </div>
+                                <!-- Elemento de la línea de tiempo 4 -->
+                                <div class="timeline-item">
+                                    <div class="timeline-item-marker">
+                                        <div class="timeline-item-marker-text">1 día</div>
+                                        <div class="timeline-item-marker-indicator bg-yellow"></div>
+                                    </div>
+                                    <div class="timeline-item-content">Alerta del monitor de actividad del servidor.
+                                    </div>
+                                </div>
+                                <!-- Elemento de la línea de tiempo 5 -->
+                                <div class="timeline-item">
+                                    <div class="timeline-item-marker">
+                                        <div class="timeline-item-marker-text">1 día</div>
+                                        <div class="timeline-item-marker-indicator bg-green"></div>
+                                    </div>
+                                    <div class="timeline-item-content">
+                                        ¡Nuevo pedido realizado!
+                                        <a class="fw-bold text-dark" href="#!">Pedido #2911</a>
+                                        ha sido realizado exitosamente.
+                                    </div>
+                                </div>
+                                <!-- Elemento de la línea de tiempo 6 -->
+                                <div class="timeline-item">
+                                    <div class="timeline-item-marker">
+                                        <div class="timeline-item-marker-text">1 día</div>
+                                        <div class="timeline-item-marker-indicator bg-purple"></div>
+                                    </div>
+                                    <div class="timeline-item-content">
+                                        Detalles para
+                                        <a class="fw-bold text-dark" href="#!">Reunión de Marketing y Planificación</a>
+                                        han sido actualizados.
+                                    </div>
+                                </div>
+                                <!-- Elemento de la línea de tiempo 7 -->
+                                <div class="timeline-item">
+                                    <div class="timeline-item-marker">
+                                        <div class="timeline-item-marker-text">2 días</div>
+                                        <div class="timeline-item-marker-indicator bg-green"></div>
+                                    </div>
+                                    <div class="timeline-item-content">
+                                        ¡Nuevo pedido realizado!
+                                        <a class="fw-bold text-dark" href="#!">Pedido #2910</a>
+                                        ha sido realizado exitosamente.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-4 col-xl-6 mb-4">
+                    <div class="card card-header-actions h-100">
+                        <div class="card-header">
+                            Seguimiento de tareas
+                            <div class="dropdown no-caret">
+                                <button class="btn btn-transparent-dark btn-icon dropdown-toggle"
+                                    id="dropdownMenuButton" type="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false"><i class="text-gray-500"
+                                        data-feather="more-vertical"></i></button>
+                                <div class="dropdown-menu dropdown-menu-end animated--fade-in-up"
+                                    aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#!">
+                                        <div class="dropdown-item-icon"><i class="text-gray-500"
+                                                data-feather="list"></i></div>
+                                        Gestionar Tareas
+                                    </a>
+                                    <a class="dropdown-item" href="#!">
+                                        <div class="dropdown-item-icon"><i class="text-gray-500"
+                                                data-feather="plus-circle"></i></div>
+                                        Agregar Nueva Tarea
+                                    </a>
+                                    <a class="dropdown-item" href="#!">
+                                        <div class="dropdown-item-icon"><i class="text-gray-500"
+                                                data-feather="minus-circle"></i></div>
+                                        Eliminar Tareas
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="card-body">
+                            <h4 class="small">
+                                Migración del Servidor
+                                <span class="float-end fw-bold">20%</span>
+                            </h4>
+                            <div class="progress mb-4">
+                                <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"
+                                    aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <h4 class="small">
+                                Seguimiento de Ventas
+                                <span class="float-end fw-bold">40%</span>
+                            </h4>
+                            <div class="progress mb-4">
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
+                                    aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <h4 class="small">
+                                Base de Datos de Clientes
+                                <span class="float-end fw-bold">60%</span>
+                            </h4>
+                            <div class="progress mb-4">
+                                <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60"
+                                    aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <h4 class="small">
+                                Detalles de Pago
+                                <span class="float-end fw-bold">80%</span>
+                            </h4>
+                            <div class="progress mb-4">
+                                <div class="progress-bar bg-info" role="progressbar" style="width: 80%"
+                                    aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <h4 class="small">
+                                Configuración de la Cuenta
+                                <span class="float-end fw-bold">¡Completo!</span>
+                            </h4>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
+                                    aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <div class="card-footer position-relative">
+                            <div class="d-flex align-items-center justify-content-between small text-body">
+                                <a class="stretched-link text-body" href="#!">Visitar Centro de Tareas</a>
+                                <i class="fas fa-angle-right"></i>
+                            </div>
+                        </div>
 
-<!-- ========== End datatable css ========== -->
-<!-- <link rel="stylesheet" href="{% static 'dashboard/css/AdminStyles.css' %}"> -->
-<link rel="stylesheet" href="{% static 'dashboard/css/styles.css' %}">
-
-<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-
-{% endblock  %}
-
-{% block SECTION %}
-<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-    <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="index.html">Bienvenido {{ user }}</a>
-    <!-- Sidebar Toggle-->
-    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><svg class="svg-inline--fa fa-bars" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"></path></svg><!-- <i class="fas fa-bars"></i> Font Awesome fontawesome.com --></button>
-    <!-- Navbar Search-->
-    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-        <div class="input-group">
-            <input class="form-control" type="text" placeholder="Buscar..." aria-label="Buscar..." aria-describedby="btnNavbarSearch">
-            <button class="btn btn-primary" id="btnNavbarSearch" type="button"><svg class="svg-inline--fa fa-magnifying-glass" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="magnifying-glass" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"></path></svg><!-- <i class="fas fa-search"></i> Font Awesome fontawesome.com --></button>
+                    </div>
+                </div>
+            </div>
+            <!-- Example Colored Cards for Dashboard Demo-->
+            <div class="row">
+                <div class="col-lg-6 col-xl-3 mb-4">
+                    <div class="card bg-primary text-white h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="me-3">
+                                    <div class="text-white-75 small">Earnings (Monthly)</div>
+                                    <div class="text-lg fw-bold">$40,000</div>
+                                </div>
+                                <i class="feather-xl text-white-50" data-feather="calendar"></i>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex align-items-center justify-content-between small">
+                            <a class="text-white stretched-link" href="#!">View Report</a>
+                            <div class="text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-3 mb-4">
+                    <div class="card bg-warning text-white h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="me-3">
+                                    <div class="text-white-75 small">Earnings (Annual)</div>
+                                    <div class="text-lg fw-bold">$215,000</div>
+                                </div>
+                                <i class="feather-xl text-white-50" data-feather="dollar-sign"></i>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex align-items-center justify-content-between small">
+                            <a class="text-white stretched-link" href="#!">View Report</a>
+                            <div class="text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-3 mb-4">
+                    <div class="card bg-success text-white h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="me-3">
+                                    <div class="text-white-75 small">Task Completion</div>
+                                    <div class="text-lg fw-bold">24</div>
+                                </div>
+                                <i class="feather-xl text-white-50" data-feather="check-square"></i>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex align-items-center justify-content-between small">
+                            <a class="text-white stretched-link" href="#!">View Tasks</a>
+                            <div class="text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-3 mb-4">
+                    <div class="card bg-danger text-white h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="me-3">
+                                    <div class="text-white-75 small">Pending Requests</div>
+                                    <div class="text-lg fw-bold">17</div>
+                                </div>
+                                <i class="feather-xl text-white-50" data-feather="message-circle"></i>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex align-items-center justify-content-between small">
+                            <a class="text-white stretched-link" href="#!">View Requests</a>
+                            <div class="text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Example Charts for Dashboard Demo-->
+            <div class="row">
+                <div class="col-xl-6 mb-4">
+                    <div class="card card-header-actions h-100">
+                        <div class="card-header">
+                            Earnings Breakdown
+                            <div class="dropdown no-caret">
+                                <button class="btn btn-transparent-dark btn-icon dropdown-toggle"
+                                    id="areaChartDropdownExample" type="button" data-bs-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"><i class="text-gray-500"
+                                        data-feather="more-vertical"></i></button>
+                                <div class="dropdown-menu dropdown-menu-end animated--fade-in-up"
+                                    aria-labelledby="areaChartDropdownExample">
+                                    <a class="dropdown-item" href="#!">Last 12 Months</a>
+                                    <a class="dropdown-item" href="#!">Last 30 Days</a>
+                                    <a class="dropdown-item" href="#!">Last 7 Days</a>
+                                    <a class="dropdown-item" href="#!">This Month</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#!">Custom Range</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-area"><canvas id="myAreaChart" width="100%" height="30"></canvas></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 mb-4">
+                    <div class="card card-header-actions h-100">
+                        <div class="card-header">
+                            Monthly Revenue
+                            <div class="dropdown no-caret">
+                                <button class="btn btn-transparent-dark btn-icon dropdown-toggle"
+                                    id="areaChartDropdownExample" type="button" data-bs-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"><i class="text-gray-500"
+                                        data-feather="more-vertical"></i></button>
+                                <div class="dropdown-menu dropdown-menu-end animated--fade-in-up"
+                                    aria-labelledby="areaChartDropdownExample">
+                                    <a class="dropdown-item" href="#!">Last 12 Months</a>
+                                    <a class="dropdown-item" href="#!">Last 30 Days</a>
+                                    <a class="dropdown-item" href="#!">Last 7 Days</a>
+                                    <a class="dropdown-item" href="#!">This Month</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#!">Custom Range</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-bar"><canvas id="myPieChart" width="100%" height="30"></canvas></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ========== Start TABLE USERS ========== -->
+                <div class="card mb-4">
+                    <div class="card-header">Gestión de usuarios</div>
+                    <div class="card-body">
+                        <table id="datatablesSimple">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Position</th>
+                                    <th>Office</th>
+                                    <th>Age</th>
+                                    <th>Start date</th>
+                                    <th>Salary</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Office</th>
+                                    <th>Age</th>
+                                    <th>Start date</th>
+                                    <th>Salary</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                <tr>
+                                    <td>Tiger Nixon</td>
+                                    <td>System Architect</td>
+                                    <td>Edinburgh</td>
+                                    <td>61</td>
+                                    <td>2011/04/25</td>
+                                    <td>$320,800</td>
+                                    <td>
+                                        <div class="badge bg-primary text-white rounded-pill">Full-time</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark me-2"><i
+                                                class="fa-solid fa-ellipsis-vertical"></i></button>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark"><i
+                                                class="fa-regular fa-trash-can"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Garrett Winters</td>
+                                    <td>Accountant</td>
+                                    <td>Tokyo</td>
+                                    <td>63</td>
+                                    <td>2011/07/25</td>
+                                    <td>$170,750</td>
+                                    <td>
+                                        <div class="badge bg-warning rounded-pill">Pending</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark me-2">
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        </button>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Ashton Cox</td>
+                                    <td>Junior Technical Author</td>
+                                    <td>San Francisco</td>
+                                    <td>66</td>
+                                    <td>2009/01/12</td>
+                                    <td>$86,000</td>
+                                    <td>
+                                        <div class="badge bg-secondary text-white rounded-pill">Part-time</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark me-2"><i
+                                                class="fa-solid fa-ellipsis-vertical"></i></button>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark"><i
+                                                class="fa-regular fa-trash-can"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Cedric Kelly</td>
+                                    <td>Senior Javascript Developer</td>
+                                    <td>Edinburgh</td>
+                                    <td>22</td>
+                                    <td>2012/03/29</td>
+                                    <td>$433,060</td>
+                                    <td>
+                                        <div class="badge bg-info rounded-pill">Contract</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark me-2"><i
+                                                class="fa-solid fa-ellipsis-vertical"></i></button>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark"><i
+                                                class="fa-regular fa-trash-can"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Airi Satou</td>
+                                    <td>Accountant</td>
+                                    <td>Tokyo</td>
+                                    <td>33</td>
+                                    <td>2008/11/28</td>
+                                    <td>$162,700</td>
+                                    <td>
+                                        <div class="badge bg-primary text-white rounded-pill">Full-time</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark me-2"><i
+                                                class="fa-solid fa-ellipsis-vertical"></i></button>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark"><i
+                                                class="fa-regular fa-trash-can"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Brielle Williamson</td>
+                                    <td>Integration Specialist</td>
+                                    <td>New York</td>
+                                    <td>61</td>
+                                    <td>2012/12/02</td>
+                                    <td>$372,000</td>
+                                    <td>
+                                        <div class="badge bg-primary text-white rounded-pill">Full-time</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark me-2"><i
+                                                class="fa-solid fa-ellipsis-vertical"></i></button>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark"><i
+                                                class="fa-regular fa-trash-can"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Herrod Chandler</td>
+                                    <td>Sales Assistant</td>
+                                    <td>San Francisco</td>
+                                    <td>59</td>
+                                    <td>2012/08/06</td>
+                                    <td>$137,500</td>
+                                    <td>
+                                        <div class="badge bg-primary text-white rounded-pill">Full-time</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark me-2"><i
+                                                class="fa-solid fa-ellipsis-vertical"></i></button>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark"><i
+                                                class="fa-regular fa-trash-can"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Rhona Davidson</td>
+                                    <td>Integration Specialist</td>
+                                    <td>Tokyo</td>
+                                    <td>55</td>
+                                    <td>2010/10/14</td>
+                                    <td>$327,900</td>
+                                    <td>
+                                        <div class="badge bg-primary text-white rounded-pill">Full-time</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark me-2"><i
+                                                class="fa-solid fa-ellipsis-vertical"></i></button>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark"><i
+                                                class="fa-regular fa-trash-can"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Colleen Hurst</td>
+                                    <td>Javascript Developer</td>
+                                    <td>San Francisco</td>
+                                    <td>39</td>
+                                    <td>2009/09/15</td>
+                                    <td>$205,500</td>
+                                    <td>
+                                        <div class="badge bg-info rounded-pill">Contract</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark me-2"><i
+                                                class="fa-solid fa-ellipsis-vertical"></i></button>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark"><i
+                                                class="fa-regular fa-trash-can"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Sonya Frost</td>
+                                    <td>Software Engineer</td>
+                                    <td>Edinburgh</td>
+                                    <td>23</td>
+                                    <td>2008/12/13</td>
+                                    <td>$103,600</td>
+                                    <td>
+                                        <div class="badge bg-primary text-white rounded-pill">Full-time</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark me-2"><i
+                                                class="fa-solid fa-ellipsis-vertical"></i></button>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark"><i
+                                                class="fa-regular fa-trash-can"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Jena Gaines</td>
+                                    <td>Office Manager</td>
+                                    <td>London</td>
+                                    <td>30</td>
+                                    <td>2008/12/19</td>
+                                    <td>$90,560</td>
+                                    <td>
+                                        <div class="badge bg-primary text-white rounded-pill">Full-time</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark me-2"><i
+                                                class="fa-solid fa-ellipsis-vertical"></i></button>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark"><i
+                                                class="fa-regular fa-trash-can"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Quinn Flynn</td>
+                                    <td>Support Lead</td>
+                                    <td>Edinburgh</td>
+                                    <td>22</td>
+                                    <td>2013/03/03</td>
+                                    <td>$342,000</td>
+                                    <td>
+                                        <div class="badge bg-primary text-white rounded-pill">Full-time</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark me-2"><i
+                                                class="fa-solid fa-ellipsis-vertical"></i></button>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark"><i
+                                                class="fa-regular fa-trash-can"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Charde Marshall</td>
+                                    <td>Regional Director</td>
+                                    <td>San Francisco</td>
+                                    <td>36</td>
+                                    <td>2008/10/16</td>
+                                    <td>$470,600</td>
+                                    <td>
+                                        <div class="badge bg-primary text-white rounded-pill">Full-time</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark me-2"><i
+                                                class="fa-solid fa-ellipsis-vertical"></i></button>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark"><i
+                                                class="fa-regular fa-trash-can"></i></button>
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            <!-- ========== End TABLE USERS ========== -->
         </div>
-    </form>
-    <!-- Navbar-->
-    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><svg class="svg-inline--fa fa-user fa-fw" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"></path></svg><!-- <i class="fas fa-user fa-fw"></i> Font Awesome fontawesome.com --></a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="{% url 'AccountSettingsView' %}">Cuenta</a></li>
-                <li><a class="dropdown-item" href="#!">Registro de actividades</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesion</a></li>
-            </ul>
-        </li>
-    </ul>
-</nav>
-<div id="layoutSidenav">
-    <!-- ========== Start SECTION DE SIDEBAR ========== -->
-    {% include "dashboard/SideBar.html" %}
-    <!-- ========== End SECTION DE SIDEBAR ========== -->
-    <div id="layoutSidenav_content">
-        <main>
-            <div class="container-fluid px-4">
-                
-                <div class="row m-2">
-                    
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-warning text-white mb-4">
-                            <div class="card-body">Ordenes Nuevas</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">Ver Detalles...</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-success text-white mb-4">
-                            <div class="card-body">Ingresos Totales</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">Ver Detalles...</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-danger text-white mb-4">
-                            <div class="card-body">Gastos Totales</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">Ver Detalles...</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-primary text-white mb-4">
-                            <div class="card-body">Nuevos Usuarios</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">Ver Detalles...</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="CardChart" class="row" hidden>
-                    <div class="col-xl-6">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-chart-area me-1"></i>
-                                Ejemplo de gráfico de áreas
-                            </div>
-                            <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-chart-bar me-1"></i>
-                                Ejemplo de gráfico de barras
-                            </div>
-                            <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-        </main>
-        <footer class="py-4 bg-light mt-auto">
-            <div class="container-fluid px-4">
-                <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                    <div>
-                        <a href="#">Política de privacidad</a>
-                        &middot;
-                        <a href="#">Términos y Condiciones</a>
-                    </div>
+        <!-- ========== End CONTENT ========== -->
+
+
+    </main>
+    <!-- ========== Start FOOTER ========== -->
+    <footer class="footer-admin mt-auto footer-light">
+        <div class="container-xl px-4">
+            <div class="row">
+                <div class="col-md-6 small">Copyright © Xilena Desing 2023</div>
+                <div class="col-md-6 text-md-end small">
+                    <a href="#">Politicas de Privacidad</a>
+                    ·
+                    <a href="#!">Todos los Derechos Reservados</a>
                 </div>
             </div>
-        </footer>
-    </div>
+        </div>
+    </footer>
+    <!-- ========== End  FOOTER========== -->
+
+
 </div>
+{% endblock %}
 
-{% endblock  %}
+{% block JS %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
 
-
-
-<!-- ========== Start ESTATICOS JS DE LA PAGINA ========== -->
-
-    {% block contentJS %}
-    
-    <!-- ========== Start jquery ========== -->
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <!-- ========== End jquery ========== -->
-
-    <!-- ========== Start SweetAlert ========== -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- ========== End SweetAlert ========== -->
-
-    <!-- ========== Start datatables ========== -->
-        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    <!-- ========== End datatables ========== -->
-    <!-- ========== Start exportar a excel ========== -->
-    <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.jqueryui.min.css" rel="stylesheet">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
-    
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
-
-    <!-- ========== End exportar a excel ========== -->
-
-    <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" rel='stylesheet'>   
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="{% static 'dashboard/js/scripts.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-
-        
-    <script src="{% static 'dashboard/js/demo/chart-area-demo.js' %}"></script>
-    <script src="{% static 'dashboard/js/demo/chart-bar-demo.js' %}"></script>
-
-
-    
-    {% endblock  %}
-<!-- ========== End ESTATICOS  JS DE LA PAGINA ========== -->
-
+    <script src="{% static 'js/datatables.min.js' %}"></script>
+    <script src="{% static 'js/datatablesSimple.js' %}"></script>
+    <script src="{% static 'js/Charts/chart-area-demo.js' %}"></script>
+    <script src="{% static 'js/Charts/chart-pie-demo.js' %}"></script>
+{% endblock JS %}

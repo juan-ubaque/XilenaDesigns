@@ -1,49 +1,82 @@
-{% extends 'base.html' %}
+{% extends 'AuthBase.html' %}
 {% load static %}
 
 
 {% block title %}
-  Inicia Sesión
+Inicia Sesión
 {% endblock title %}
 
 
-{% block contentCSS %}
-  <link rel="stylesheet" href="{% static 'Admin/adminStatic/css/AdminStyles.css' %}">
-  <script src="{% static 'js/AdminScripts.js' %}"></script>
-  <script src="{% static 'js/datatablesSimple.js' %}"></script>
-{% endblock %}
+{% block STATIC %}
+<link rel="stylesheet" href="{% static 'css/DashboardDatatable.css' %}">
 
-{% block SECTION %}
+<script src="{% static 'js/datatablesSimple.js' %}"></script>
+{% endblock STATIC %}
 
-     <div id="layoutAuthentication">
-        <div id="layoutAuthentication_content">
-            <main>
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-5">
-                            <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                <div class="card-header">
-                                    <h3 class="text-center font-weight-light my-4">¿Has olvidado tu contraseña?</h3>
-                                </div>
-                                <div class="card-body recuperacion-form"> <!-- Agregar una clase CSS al contenedor del formulario de recuperación de contraseña -->
-                                    <form method="post" action="{% url 'recovery' %}">
-                                        {% csrf_token %}
-                                        <div class="form-floating mb-3">
-                                            <input class="form-control" id="email" name="email" type="email" placeholder="Correo Electrónico" />
-                                            <label for="email">Usuario o email</label>
-                                        </div>
-                                        <!-- Agregar más campos de recuperación de contraseña aquí si es necesario -->
-                                        <button class="btn btn-primary" type="submit">Enviar</button>
-                                    </form>
-                                </div>
-                                <div class="card-footer text-center py-3">
-                                    <div class="small"><a href="{% url 'login' %}">¿Recordaste tu contraseña? Inicia sesión</a></div>
-                                </div>
+
+
+<!-- ========== Start CONTENT MAIN ========== -->
+{% block CONTENT_MAIN %}
+
+
+
+<div id="layoutAuthentication">
+    <div id="layoutAuthentication_content">
+        <main>
+            <div class="container-xl px-4">
+                <div class="row justify-content-center">
+                    <div class="col-lg-5">
+                        <!-- Basic forgot password form-->
+                        <div class="card shadow-lg border-0 rounded-lg mt-5">
+                            <div class="card-header justify-content-center"><h3 class="fw-light my-4">Recupera tu contraseña</h3></div>
+                            <div class="card-body">
+                                <div class="small mb-3 text-muted">Ingrese su dirección de correo electrónico y le enviaremos un enlace para restablecer su contraseña.</div>
+                                <!-- Forgot password form-->
+                                <form method="post" action="{% url 'recovery' %}">
+                                    <!-- Form Group (email address)-->
+                                    <div class="mb-3">
+                                        <label class="small mb-1" for="inputEmailAddress">Correo electrónico</label>
+                                        <input class="form-control" id="inputEmailAddress" type="email" aria-describedby="emailHelp" placeholder="Ingresa tu correo" name="email"/>
+                                    </div>
+                                    <!-- Form Group (submit options)-->
+                                    <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                                        <a class="small" href="{% url 'home' %}">regresar a inicio de sesion</a>
+                                        <button class="btn btn-primary" type="submit">Restablecer contraseña</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-footer text-center">
+                                <div class="small"><a href="{% url 'register' %}">Necesitas nueva cuenta ?</a></div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </main>
-        </div>
+            </div>
+        </main>
     </div>
+    <div id="layoutAuthentication_footer">
+        <footer class="footer-admin mt-auto footer-dark">
+            <div class="container-xl px-4">
+                <div class="row">
+                    <div class="col-md-6 small">Copyright © Xilena Desing 2023</div>
+                    <div class="col-md-6 text-md-end small">
+                        <a href="#!">Politicas de Privacidad</a>
+                        ·
+                        <a href="#!">Todos los Derechos Reservados</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+
+{% endblock CONTENT_MAIN %}
+<!-- ========== End CONTENT MAIN ========== -->
+
+
+
+<!-- ========== Start JS CONTENT ========== -->
+{% block JS %}
+
 {% endblock %}
+<!-- ========== End JS CONTENT ========== -->

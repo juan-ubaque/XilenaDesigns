@@ -1,34 +1,54 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.forms import PasswordResetForm
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+#--------------------------------- MESSAGES ------------------------------------#
+
+from django.contrib                 import messages
+#--------------------------------- VIEWS ------------------------------------#
+
+from django.views.generic           import *
+#--------------------------------- SHORCUTS ------------------------------------#
+
+from django.shortcuts               import render, redirect
+from django.shortcuts               import get_object_or_404
+#--------------------------------- AUTH ------------------------------------#
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms      import UserCreationForm
+from django.contrib.auth.forms      import PasswordResetForm
+from django.contrib.auth            import authenticate, login, logout
+#--------------------------------- URLS ------------------------------------#
 
-from django.views.generic import *
+from Products.urls                  import urlpatterns
+#-------------------------------- MODELS -----------------------------------#
 
-#importamos las urls de la app products
-from Products.urls import urlpatterns
+from Products.models                import *
+from django.contrib.auth.models     import User
 
-#importamos los modelos
-from Products.models import *
+
+
 
 
 
 @login_required
 def adminHome(request):
 
-    user = request.session.get('user', None)#obtenemos el usuario de la sesion
+    sessionUser = request.session.get('user', None)#obtenemos el usuario de la sesion
 
+    if sessionUser:
+        user = User.objects.get(pk=request.user.id)
+    else:
+        user = None
 
-    return render(request, 'adminHome.html', {'user': user})
+    context = {
+        'user': user,
+        'name': user.first_name + ' ' + user.last_name,
+    }    
+
+    return render(request, 'adminHome.html', context)
 
 
 class CategoriesView(TemplateView):
-    template_name = "dashboard/Pages/categories.html"
+    template_name = "Pages/Categories.html"
 
 class ProductsView(TemplateView):
-    template_name = "dashboard/Pages/Products.html"
+    template_name = "Pages/Products.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -48,7 +68,7 @@ class AccountSettingsView(TemplateView):
         return context
 
 
-from django.shortcuts import get_object_or_404
+
 
 def LoginUser(request):
     if request.method == 'POST':
@@ -125,4 +145,31 @@ def userLogout(request):
     return redirect('login')
 
 
+#--------------------------------- VIEWS ACCOUNT ------------------------------------#
+class AccountProfileView(TemplateView):
+    template_name = 'Pages/Account/AccountProfile.html'
 
+    def get_context_data(self, **kwargs):
+        
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Perfil'
+        return context
+
+
+class AccountSecurityView(TemplateView):
+    template_name = 'Pages/Account/AccountSecurity.html'
+
+    def get_context_data(self, **kwargs):
+        
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Seguridad'
+        return context
+
+class AccountNotificationsView(TemplateView):
+    template_name = 'Pages/Account/AccountNotifications.html'
+
+    def get_context_data(self, **kwargs):
+        
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Notificaciones'
+        return context
