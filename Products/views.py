@@ -82,7 +82,7 @@ class HomeListView(TemplateView):
 
 class ProductDetailView(DetailView):
     model = Product
-    template_name = 'Pages/DetailProductView.html'
+    template_name = 'pages/DetailProductView.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
