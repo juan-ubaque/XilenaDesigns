@@ -32,11 +32,6 @@ from email.mime.image import MIMEImage
 #Settings
 from django.conf import settings
 
-#--------------------------------- LIBRARIES ------------------------------------#
-import threading
-
-
-
 def home(request):
     
     productos = Product.objects.all()
@@ -526,24 +521,18 @@ def send_email(request, id):
                             mensaje.as_string())
 
         
-
-        mailServer.quit()
-
-        # Diferir la redirección usando un hilo
-        redirect_thread = threading.Thread(target=redirect_after_email, args=('home',))
-        redirect_thread.start()
+        
 
         return redirect('home')
     except Exception as e:
     
-        return redirect('cart')
+        return redirect('home')
 #--------------END-----------------#
 
 
 
 
 def test (request):
-
     usuario = User.objects.get(pk=3)
 
     # Si existe una sesión activa, obtenemos el carrito
@@ -572,13 +561,3 @@ def test (request):
             'total': total,
             }
     return render(request, 'MAILS/confirmCreateUser.html', context)
-#--------------END-----------------#
-
-def redirect_after_email(redirect_url):
-    # Agrega un pequeño retraso antes de redirigir
-    import time
-    time.sleep(2)  # Ajusta según sea necesario
-
-    # Redirige a la URL especificada
-    return redirect(redirect_url)
-#--------------END-----------------#
