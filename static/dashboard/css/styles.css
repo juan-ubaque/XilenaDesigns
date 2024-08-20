@@ -11269,3 +11269,158 @@ body {
   font-size: 0.75rem;
   border-radius: 0.375rem !important;
 }
+
+.contact-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 40px;
+ 
+}
+.contact-info, .contact-form {
+  flex: 1;
+  min-width: 300px;
+  padding: 20px;
+}
+.contact-info h4, .contact-form h4 {
+  font-size: 2.0rem;
+  color: #343a40;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+.contact-info div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.contact-info .icon {
+  font-size: 1.5rem;
+  color: #007bff;
+  margin-right: 15px;
+}
+.contact-info span {
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 5px;
+}
+.contact-info p {
+  font-size: 1rem;
+  color: #495057;
+  margin: 0;
+}
+.contact-form .form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.contact-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+.contact-form input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #495057;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+.contact-form input.full-width {
+  width: 100%;
+}
+.contact-form button {
+  background-color: #ffffff;
+  color: #007bff;
+  border: 1px solid #007bff;
+  padding: 12px 20px;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-top: 10px;
+}
+.contact-form button:hover {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.team-wrapper {
+  display: flex;
+  justify-content: center; /* Centra el contenedor de las tarjetas horizontalmente */
+  padding: 0 10px; /* Espaciado lateral del contenedor central */
+}
+
+.team-container {
+  display: grid; /* Establece el contenedor como grid */
+  grid-template-columns: repeat(3, 1fr); /* Tres columnas iguales */
+  gap: 15px; /* Espacio entre tarjetas */
+  max-width: 1200px; /* Ancho máximo del contenedor de las tarjetas */
+  width: 100%; /* Asegura que el contenedor de las tarjetas ocupe todo el ancho disponible hasta el máximo */
+}
+
+.team-card {
+  background-color: #fff; /* Color de fondo de las tarjetas */
+  border: 1px solid #ddd; /* Borde ligero para las tarjetas */
+  border-radius: 8px; /* Bordes redondeados */
+  padding: 10px; /* Espaciado interno de las tarjetas */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra ligera para las tarjetas */
+  text-align: center; /* Centra el texto dentro de las tarjetas */
+  max-width: 300px; /* Ancho máximo de las tarjetas */
+  margin: 0 auto; /* Centra las tarjetas dentro de su contenedor de grid */
+}
+
+.team-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada al pasar el ratón */
+}
+
+.team-card img {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.team-card h5 {
+  font-size: 1.125rem;
+  color: #343a40;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.team-card p {
+  font-size: 0.875rem;
+  color: #6c757d;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+  .team-container {
+      grid-template-columns: repeat(2, 1fr); /* Dos columnas en pantallas más pequeñas */
+  }
+}
+
+@media (max-width: 480px) {
+  .team-container {
+      grid-template-columns: 1fr; /* Una columna en pantallas aún más pequeñas */
+  }
+}
+.map-container {
+  text-align: center;
+}
+#map {
+  height: 500px; /* Altura del mapa */
+  width: 100%; /* Ancho del mapa */
+  max-width: 800px; /* Ancho máximo del mapa */
+  border: none; /* Quitar borde del iframe */
+}
+h1 {
+margin-bottom: 20px;
+}

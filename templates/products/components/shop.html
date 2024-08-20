@@ -82,7 +82,6 @@
 
                 <!-- ========== Start TARJETAS PRODUCTOS ========== -->
                 {% for product in productos %}
-
                 <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
                     <div id="productos-container"   class="card product-item border-0 mb-4">
                         <div
@@ -109,10 +108,13 @@
                 </div>
                 {% endfor %}
                 <!-- ========== End TARJETAS PRODUCTOS ========== -->
+                <!-- Información sobre la empresa -->
+                <!-- Información sobre la empresa -->
+
 
 
                 <!-- Controles de paginación -->
-                <div class="col-12 pb-1">
+                <!--<div class="col-12 pb-1">
                     <nav aria-label="Page navigation">
                         <ul class="pagination justify-content-center mb-3">
                             {% if productos.has_previous %}
@@ -140,11 +142,7 @@
                             {% endif %}
                         </ul>
                     </nav>
-                </div>
-
-
-
-
+                </div>-->
 
             </div>
         </div>
@@ -152,3 +150,206 @@
     </div>
 </div>
 <!-- Shop End -->
+
+<!--informacion de la pagina-->
+<div>
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Left Column for Text -->
+            <div class="col-md-6">
+                <h2>NUESTRA EMPRESA</h2>
+                <p>
+                    Somos una empresa colombiana, trabajando para el mejoramiento de la alimentación de las personas desde el 2002,
+                    procesando productos derivados de la industria de trilla y molinería de maíz como: grits, sémola, clasificados de maíz
+                    amarillo y blanco, trillados (t3, t5, t10) y harinas crudas.
+                </p>
+                <p>
+                    Contamos con oficinas comerciales y administrativas en Medellín, planta de producción en Buga y bodegas de almacenamiento
+                    en Buga, Sabaneta y Bogotá. Actualmente, trabajamos con las empresas de consumo masivo más grandes del país y exportamos
+                    a más de 5 países.
+                </p>
+                <h2 class="mt-4">INSTALACIONES MODERNAS</h2>
+                <p>
+                    Contamos con una planta de producción ubicada en Guadalajara de Buga, Valle del Cauca, Colombia y sedes administrativas
+                    y comerciales en Medellín y Bogotá. Tenemos una infraestructura moderna para atender sus requerimientos.
+                </p>
+            </div>
+            
+            <!-- Right Column for Video -->
+            <div class="col-md-6">
+                <!-- Add your video embed code here -->
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/your-video-id" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+            <!-- Section with Background Image -->
+    </div>
+    
+    
+    
+    
+    <div class="col-12 d-flex justify-content-center align-items-center my-5">
+        <div class="info-section text-center p-4 border rounded shadow" style="background-color: #f8f9fa;">
+            <h3 class="mb-3">Conoce a Nuestro Equipo</h3>
+            <p class="lead">En nuestra empresa, contamos con un equipo de profesionales altamente capacitados y comprometidos con la excelencia. Cada miembro de nuestro personal desempeña un papel crucial en garantizar que ofrecemos productos y servicios de la más alta calidad. Desde la gestión administrativa hasta el asesoramiento y la logística, nuestro equipo está preparado para afrontar cualquier desafío con profesionalismo y dedicación.</p>
+        </div>
+    </div>
+
+
+
+   
+    
+    <!-- Tarjetas del Personal Capacitado -->
+    <div class="col-12 pb-1">
+        <div class="team-container">
+            <!-- Tarjeta 1 -->
+            <div class="team-card">
+                <img src="{% static '/img/brahian.jpeg' %}" alt="Jessica Castro">
+                <h5>Brahian lozano</h5>
+                <p>Administradora con amplia experiencia en la gestión de operaciones y procesos, liderando con visión estratégica.</p>
+            </div>
+            <div class="team-card">
+                <img src="{% static '/img/yesica.jpeg' %}" alt="Jessica Castro">
+                <h5>Jessica Castro</h5>
+                <p>Administradora con amplia experiencia en la gestión de operaciones y procesos, liderando con visión estratégica.</p>
+            </div>
+            <!-- Tarjeta 2 -->
+            <div class="team-card">
+                <img src="{% static '/img/aleja1.jpeg' %}" alt="Alejandra Ducuara">
+                <h5>Alejandra Ducuara</h5>
+                <p>Asesora dedicada a ofrecer soporte y guía experta en nuestras operaciones, con un enfoque en la excelencia del servicio.</p>
+            </div>
+            <!-- Tarjeta 3 -->
+            <div class="team-card">
+                <img src="{% static '/img/viviana.jpeg' %}" alt="Viviana Palomino">
+                <h5>Viviana Palomino</h5>
+                <p>Asesora con un enfoque en la atención al cliente y optimización de servicios, asegurando la satisfacción del cliente.</p>
+            </div>
+            <!-- Tarjeta 4 -->
+            <div class="team-card">
+                <img src="{% static '/img/yefri.jpeg' %}" alt="Yefri Ordoñez">
+                <h5>Yefri Ordoñez</h5>
+                <p>Administrador de bodega con habilidades en la gestión de inventarios y logística, garantizando eficiencia operativa.</p>
+            </div>
+            <!-- Tarjeta 5 -->
+            <div class="team-card">
+                <img src="{% static '/img/nuchacho.jpeg' %}" alt="Manuel Gomez">
+                <h5>Manuel Gomez</h5>
+                <p>Auxiliar de bodega, responsable de apoyar en el manejo y organización de productos, contribuyendo a la fluidez del proceso.</p>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    
+    
+    <!--contacto-->
+    
+    <!-- Sección de Contacto -->
+    <div class="contact-section">
+        <!-- Información de Contacto -->
+        <div class="contact-info">
+            <h4>Información de Contacto</h4>
+            <div>
+                <i class="fas fa-phone icon"></i>
+                <div>
+                    <span>Teléfonos:</span>
+                    <p>+57 318 608-2077<br>+57 (604) 560-8410</p>
+                </div>
+            </div>
+            <div>
+                <i class="fas fa-envelope icon"></i>
+                <div>
+                    <span>Email:</span>
+                    <p>info@agrograin.com</p>
+                </div>
+            </div>
+            <div>
+                <i class="fas fa-clock icon"></i>
+                <div>
+                    <span>Horario de Atención:</span>
+                    <p>Lunes a Viernes<br>de 7:00 AM a 6:00 PM</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Formulario de Contacto -->
+        <div class="contact-form">
+            <h5>¿Tiene alguna pregunta o le gustaría ser uno de nuestros distribuidores?</h5>
+            <form>
+                <div class="form-group">
+                    <input type="text" id="name" name="name" placeholder="Nombre" required>
+                    <input type="text" id="phone" name="phone" placeholder="Teléfono" required>
+                    <input type="email" id="email" name="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="product" name="product" placeholder="Producto de interés" required>
+                    <input type="text" id="city" name="city" placeholder="Ciudad de destino" required>
+                    <input type="number" id="quantity" name="quantity" placeholder="Kilos a consumir mensual" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Mensaje:</label>
+                    <input type="text" id="message" name="message" placeholder="Escriba su mensaje" required class="full-width">
+                </div>
+                <button type="submit" style="background-color: #3ead5a;color: #ced4da;">Enviar</button>
+            </form>
+        </div>
+    </div>
+    
+    
+    
+    
+    
+    <!--contacto-->
+    
+    
+    
+    <div class="map-container">
+    <h1>Ubicación de la Empresa</h1>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3979.965092594046!2d-74.96985622689712!3d4.02753894712928!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3eccb5311ae4ff%3A0xfa89b07ca833896d!2sCra.%206%20%236-15%2C%20Guamo%2C%20Tolima!5e0!3m2!1ses!2sco!4v1724102634545!5m2!1ses!2sco" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    
+    <div>
+        <!-- Controles de paginación -->
+        <div class="col-12 pb-1">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center mb-3">
+                    {% if productos.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                    {% endif %}
+    
+                    {% for i in productos.paginator.page_range %}
+                    <li class="page-item {% if productos.number == i %}active{% endif %}">
+                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                    </li>
+                    {% endfor %}
+    
+                    {% if productos.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ productos.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    
+
