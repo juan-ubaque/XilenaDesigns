@@ -1,0 +1,8 @@
+Historia de Usuario 1: Inicio de Sesión
+Como usuario registrado, quiero iniciar sesión en la plataforma para acceder a mi cuenta y realizar compras.
+
+Historia de Usuario 2: Gestión de Productos
+Como administrador, quiero agregar, modificar y eliminar productos del catálogo para mantener actualizado el inventario.
+
+Historia de Usuario 3: Visualización del Catálogo
+Como usuario logueado, quiero ver el catálogo de accesorios para explorar los productos disponibles.
