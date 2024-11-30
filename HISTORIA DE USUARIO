@@ -6,3 +6,8 @@ Como administrador, quiero agregar, modificar y eliminar productos del catálogo
 
 Historia de Usuario 3: Visualización del Catálogo
 Como usuario logueado, quiero ver el catálogo de accesorios para explorar los productos disponibles.
+
+Historia de Usuario 4: Carrito de Compras
+Como usuario logueado, quiero agregar y eliminar productos del carrito para organizar mis compras antes de pagar.
+Historia de Usuario 5: Administración de Roles
+Como administrador, quiero gestionar los roles de los usuarios para definir qué funcionalidades puede usar cada uno.
